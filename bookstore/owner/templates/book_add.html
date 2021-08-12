@@ -4,47 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
-   <div class="container">
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <form action="{%url 'addbook' %}" method="post">
-                    {%csrf_token%}
-<!--                    cross site request forgery-->
-                    <div class="mb-3">
-                        <label for="">Book name</label>
-                        <input type="text" name="book_name" class="form-control">
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="">Author</label>
-                        <input type="text" name="author" class="form-control">
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="">Price</label>
-                        <input type="text" name="price" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="">No of Copies</label>
-                        <input type="text" name="copies" class="form-control">
-                    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="{%url 'addbook' %}" method="post">
+                {%csrf_token%}
+                <!--                    cross site request forgery-->
+               {{form.as_p}}
 
 
+                <button type="submit" class="btn btn-success">Add Book</button>
+            </form>
 
-                    <button type="submit" class="btn btn-success">Add Book</button>
-                </form>
-
-            </div>
-            <div class="col-4"></div>
         </div>
+        <div class="col-4"></div>
     </div>
+</div>
 
 </body>
 </html>

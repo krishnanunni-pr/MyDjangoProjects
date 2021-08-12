@@ -1,10 +1,17 @@
 from django.shortcuts import render
 
+from Maths import forms
 # Create your views here.
+
+def index(request):
+    return render(request,"index.html")
 
 def add_numbers(request):
     if request.method=="GET":
-        return render(request,"addition.html")
+        form=forms.CalculationForm()
+        context={}
+        context["form"]=form
+        return render(request,"addition.html",context)
     elif request.method=="POST":
          num1=int(request.POST["num1"])
          num2=int(request.POST["num2"])
@@ -18,7 +25,10 @@ def add_numbers(request):
 
 def sub_numbers(request):
     if request.method=="GET":
-        return render(request,"substraction.html")
+        form = forms.CalculationForm()
+        context = {}
+        context["form"] = form
+        return render(request,"substraction.html",context)
     elif request.method=="POST":
         num1=int(request.POST["num1"])
         num2=int(request.POST["num2"])
@@ -31,7 +41,10 @@ def sub_numbers(request):
 
 def mul_numbers(request):
     if request.method=="GET":
-        return render(request,"multiplication.html")
+        form = forms.CalculationForm()
+        context = {}
+        context["form"] = form
+        return render(request,"multiplication.html",context)
     elif request.method=="POST":
         num1=int(request.POST["num1"])
         num2=int(request.POST["num2"])
@@ -43,7 +56,10 @@ def mul_numbers(request):
 
 def div_numbers(request):
     if request.method=="GET":
-        return render(request,"division.html")
+        form = forms.CalculationForm()
+        context = {}
+        context["form"] = form
+        return render(request,"division.html",context)
     elif request.method=="POST":
         num1=int(request.POST["num1"])
         num2=int(request.POST["num2"])
@@ -54,7 +70,10 @@ def div_numbers(request):
 
 def cube_numbers(request):
     if request.method=="GET":
-        return render(request,"cube.html")
+        form=forms.CubeForm()
+        context = {}
+        context["form"] = form
+        return render(request,"cube.html",context)
     elif request.method=="POST":
         num1=int(request.POST["num1"])
         res = num1**3

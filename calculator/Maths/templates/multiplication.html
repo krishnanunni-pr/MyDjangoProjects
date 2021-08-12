@@ -14,13 +14,8 @@
             <form action="{%url 'multiplication' %}" method="post">
                 {%csrf_token%}
 
-                <div class="mb-3">
-                    <input type="text" name="num1" placeholder="Enter number 1"  class="formcontrol">
-                </div>
-                <div class="mb-3">
-                    <input type="text" name="num2" placeholder="Enter number 2"  class="formcontrol">
-                </div>
-                <button type="submit">Product</button>
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Product</button>
             </form>
         </div>
         <div class="col-4">

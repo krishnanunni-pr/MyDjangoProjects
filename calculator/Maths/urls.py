@@ -7,5 +7,6 @@ urlpatterns=[
     path("substraction",views.sub_numbers,name="substraction"),
     path("multiplication",views.mul_numbers,name="multiplication"),
     path("division",views.div_numbers,name="division"),
-    path("cube",views.cube_numbers,name="cube")
+    path("cube",views.cube_numbers,name="cube"),
+    path('',views.index,name='home')
 ]
