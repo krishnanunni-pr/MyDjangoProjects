@@ -13,60 +13,66 @@ def add_numbers(request):
         context["form"]=form
         return render(request,"addition.html",context)
     elif request.method=="POST":
-         num1=int(request.POST["num1"])
-         num2=int(request.POST["num2"])
-         res=num1+num2
-         context={}
-         context["result"]=res
-         context["num1"]=num1
-         context["num2"]=num2
-         return render(request,"addition.html",context)
+         form=forms.CalculationForm(request.POST)
+         if form.is_valid():
+             num1=form.cleaned_data["num1"]
+             num2=form.cleaned_data["num2"]
+             res=num1+num2
+             context={}
+             context["result"]=res
+             return render(request,"addition.html",context)
+
+         return render(request,"addition.html")
 
 
 def sub_numbers(request):
-    if request.method=="GET":
-        form = forms.CalculationForm()
-        context = {}
-        context["form"] = form
-        return render(request,"substraction.html",context)
-    elif request.method=="POST":
-        num1=int(request.POST["num1"])
-        num2=int(request.POST["num2"])
-        res = num1 - num2
-        context={}
-        context["result"]=res
-        return render(request,"substraction.html",context)
+    form=forms.CalculationForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.CalculationForm(request.POST)
+        if form.is_valid():
+            num1 = form.cleaned_data["num1"]
+            num2 = form.cleaned_data["num2"]
+            res = num1 - num2
+            context = {}
+            context["result"] = res
+            return render(request,"substraction.html",context)
+    return render(request,"substraction.html",context)
 
 
 
 def mul_numbers(request):
-    if request.method=="GET":
-        form = forms.CalculationForm()
-        context = {}
-        context["form"] = form
-        return render(request,"multiplication.html",context)
-    elif request.method=="POST":
-        num1=int(request.POST["num1"])
-        num2=int(request.POST["num2"])
-        res = num1 * num2
-        context={}
-        context["result"]=res
-        return render(request,"multiplication.html",context)
+    form=forms.CalculationForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.CalculationForm(request.POST)
+        if form.is_valid():
+            num1 = form.cleaned_data["num1"]
+            num2 = form.cleaned_data["num2"]
+            res = num1 * num2
+            context = {}
+            context["result"] = res
+            return render(request, "multiplication.html", context)
+
+    return render(request,"multiplication.html",context)
 
 
 def div_numbers(request):
-    if request.method=="GET":
-        form = forms.CalculationForm()
-        context = {}
-        context["form"] = form
-        return render(request,"division.html",context)
-    elif request.method=="POST":
-        num1=int(request.POST["num1"])
-        num2=int(request.POST["num2"])
-        res = num1 / num2
-        context={}
-        context["result"]=res
-        return render(request,"division.html",context)
+    form=forms.CalculationForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.CalculationForm(request.POST)
+        if form.is_valid():
+            num1 = form.cleaned_data["num1"]
+            num2 = form.cleaned_data["num2"]
+            res= num1/num2
+            context={}
+            context["result"]=res
+            return render(request,"division.html",context)
+    return render(request,"division.html",context)
 
 def cube_numbers(request):
     if request.method=="GET":

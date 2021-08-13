@@ -5,23 +5,20 @@ from owner import forms
 
 # Create your views here.
 def book_create(request):
-    if request.method=="GET":
-        form=forms.BookForm()
-        context={}
-        context["form"]=form
-        return  render(request,"book_add.html",context)
-    elif request.method=="POST":
-        form=forms.BookForm(request.POST)
+    form=forms.AddBookForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.AddBookForm(request.POST)
         if form.is_valid():
+            book_name=form.cleaned_data["book_name"]
+            author=form.cleaned_data["author"]
+            price=form.cleaned_data["price"]
+            copies=form.cleaned_data["copies"]
+            print(book_name,author,price,copies)
+            return render(request,"book_add.html",context)
+    return render(request,"book_add.html",context)
 
-        # print(request.POST)
-        # # request.POST={'book_name':"P.S I love you"}
-        # book_name=request.POST["book_name"]
-        # price=request.POST["price"]
-        # author=request.POST["author"]
-        # copies=request.POST["copies"]
-        # print(book_name,author,price,copies)
-        # return render(request,"book_add.html")
 
 
 def book_list(request):

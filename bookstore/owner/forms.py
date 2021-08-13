@@ -1,11 +1,11 @@
 from django import forms
 
-class BookForm(forms.Form):
+class AddBookForm(forms.Form):
 
-    Book_name=forms.CharField()
-    Author=forms.CharField()
-    Price=forms.IntegerField()
-    Copies=forms.IntegerField()
+    book_name=forms.CharField()
+    author=forms.CharField()
+    price=forms.IntegerField()
+    copies=forms.IntegerField()
 
 
     def clean(self):
