@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
-            <form action="{%url 'addbook' %}" method="post">
+            <form action="" method="post">
                 {%csrf_token%}
                 <!--                    cross site request forgery-->
                {{form.as_p}}
