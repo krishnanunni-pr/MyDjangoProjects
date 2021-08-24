@@ -21,6 +21,8 @@ def add_numbers(request):
              context={}
              context["result"]=res
              return render(request,"addition.html",context)
+         else:
+             return render(request, "addition.html", {"form": form})
 
          return render(request,"addition.html")
 
@@ -72,6 +74,7 @@ def div_numbers(request):
             context={}
             context["result"]=res
             return render(request,"division.html",context)
+
     return render(request,"division.html",context)
 
 def cube_numbers(request):

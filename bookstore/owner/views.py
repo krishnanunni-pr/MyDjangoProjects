@@ -48,7 +48,14 @@ def book_create(request):
             copies=form.cleaned_data["copies"]
             print(book_name,author,price,copies)
             return render(request,"book_add.html",context)
+        else:
+            return render(request, "book_add.html", {"form": form})
+
     return render(request,"book_add.html",context)
+
+
+
+
 
 
 
