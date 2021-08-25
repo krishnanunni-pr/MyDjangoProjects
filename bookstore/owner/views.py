@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 
+from owner.models import Book
 
 from owner import forms
 
@@ -46,7 +47,9 @@ def book_create(request):
             author=form.cleaned_data["author"]
             price=form.cleaned_data["price"]
             copies=form.cleaned_data["copies"]
-            print(book_name,author,price,copies)
+            print(form.cleaned_data)
+            Book=Book(book_name=book_name,author=author,price=price,copies=copies)
+            Book.save()
             return render(request,"book_add.html",context)
         else:
             return render(request, "book_add.html", {"form": form})

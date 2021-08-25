@@ -4,47 +4,47 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
- <div class="container">
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <form action="{%url 'addemployee' %}" method="post">
-                    {%csrf_token%}
-<!--                    cross site request forgery-->
-                    <div class="mb-3">
-                        <label for="">Employee name</label>
-                        <input type="text" name="employee_name" class="form-control">
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="{%url 'addemployee' %}" method="post">
+                {%csrf_token%}
+                <!--                    cross site request forgery-->
+                <div class="mb-3">
+                    <label for="">Employee name</label>
+                    <input type="text" name="employee_name" class="form-control">
 
-                    </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="">Designation</label>
-                        <input type="text" name="designation" class="form-control">
+                <div class="mb-3">
+                    <label for="">Designation</label>
+                    <input type="text" name="designation" class="form-control">
 
-                    </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="">Experience</label>
-                        <input type="text" name="experience" class="form-control">
-                    </div>
+                <div class="mb-3">
+                    <label for="">Experience</label>
+                    <input type="text" name="experience" class="form-control">
+                </div>
 
-                    <div class="mb-3">
-                        <label for="">Salary</label>
-                        <input type="text" name="salary" class="form-control">
-                    </div>
+                <div class="mb-3">
+                    <label for="">Salary</label>
+                    <input type="text" name="salary" class="form-control">
+                </div>
 
 
+                <button type="submit" class="btn btn-success">Add Book</button>
+            </form>
 
-                    <button type="submit" class="btn btn-success">Add Book</button>
-                </form>
-
-            </div>
-            <div class="col-4"></div>
         </div>
+        <div class="col-4"></div>
     </div>
+</div>
 
 </body>
 </html>
