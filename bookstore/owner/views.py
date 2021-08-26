@@ -73,4 +73,4 @@ def book_detail(request,id):
     book=Book.objects.get(id=id)
     context={}
     context["book"]=book
-    return render(request,"book_detail",context)
+    return render(request,"book_detail.html",context)
