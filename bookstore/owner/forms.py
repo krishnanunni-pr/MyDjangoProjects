@@ -1,4 +1,5 @@
 from django import forms
+from owner.models import Book
 
 class AddBookForm(forms.Form):
 
@@ -10,8 +11,13 @@ class AddBookForm(forms.Form):
 
     def clean(self):
         cleaned_data=super().clean()
+        book_name=cleaned_data["book_name"]
         price=cleaned_data["price"]
         copies=cleaned_data["copies"]
+        books=Book.objects.filter(book_name=book_name)
+        if books:
+            msg="this book already exist"
+            self.add_error("book_name",msg)
         if int(price) < 0:
             msg="invalid price"
             self.add_error("price",msg)

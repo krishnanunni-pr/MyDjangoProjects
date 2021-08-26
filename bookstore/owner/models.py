@@ -6,6 +6,7 @@ class Book(models.Model):
     author=models.CharField(max_length=80)
     price=models.PositiveIntegerField()
     copies=models.PositiveIntegerField()
+    
 
 
     def __str__(self):

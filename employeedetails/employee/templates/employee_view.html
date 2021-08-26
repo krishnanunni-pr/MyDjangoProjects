@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <table>
+                <tr>
+                    <td>NAME</td>
+                    <td>DEPARTMENT</td>
+                    <td>SALARY</td>
+                    <td>EXPERIENCE</td>
+
+                </tr>
+                {%for emps in emp%}
+                <tr>
+                    <td>{{emps.emp_name}}</td>
+                    <td>{{emps.depaatments}}</td>
+                    <td>{{emps.salary}}</td>
+                    <td>{{emps.exp}}</td>
+                    <td><a href="{%url 'empdeatials' emps.id%}"class="btn-success">View</a></td>
+                    <td><a href=""class="btn-success">Remove</a></td>
+                </tr>
+                {%endfor%}
+            </table>
+
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -36,6 +36,7 @@ def loginview(request):
             print(username,password)
             return redirect("addbook")
     return render(request,"login.html",context)
+
 def book_create(request):
     form=forms.AddBookForm()
     context={}
@@ -47,25 +48,29 @@ def book_create(request):
             author=form.cleaned_data["author"]
             price=form.cleaned_data["price"]
             copies=form.cleaned_data["copies"]
-            print(form.cleaned_data)
-            Book=Book(book_name=book_name,author=author,price=price,copies=copies)
-            Book.save()
-            return render(request,"book_add.html",context)
+            # print(form.cleaned_data)
+            book=Book(book_name=book_name,author=author,price=price,copies=copies)
+            book.save()
+            return redirect('listbook')
         else:
-            return render(request, "book_add.html", {"form": form})
+            return render(request,"book_add.html",{"form":form})
 
     return render(request,"book_add.html",context)
 
-
-
-
-
-
-
 def book_list(request):
-    return render(request,"book_list.html")
+    books=Book.objects.all()
+    context={}
+    context['books']=books
+    return render(request,"book_list.html",context)
 
 def book_edit(request,id):
     return render(request,"book_edit.html")
+
 def book_remove(request,id):
     return render(request,"book_remove.html")
+
+def book_detail(request,id):
+    book=Book.objects.get(id=id)
+    context={}
+    context["book"]=book
+    return render(request,"book_detail",context)
