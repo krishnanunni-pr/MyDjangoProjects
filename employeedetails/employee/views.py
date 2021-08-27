@@ -4,6 +4,9 @@ from employee.models import Employee
 from employee import forms
 # Create your views here.
 
+def home(request):
+    return render(request,"index.html")
+
 def emp_add(request):
     form=forms.EmployeeAddForm()
     context={"form":form}

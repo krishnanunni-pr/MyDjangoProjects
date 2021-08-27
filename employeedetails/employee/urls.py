@@ -8,5 +8,6 @@ urlpatterns=[
     path("employees/view",views.employee_view,name="empview"),
     path("employees/details/<int:id>",views.emp_details,name="empdeatials"),
     path("employees/change/<int:id>",views.emp_update,name="updateemp"),
-    path("employees/details/remove/<int:id>",views.emp_remove,name="removeemp")
+    path("employees/details/remove/<int:id>",views.emp_remove,name="removeemp"),
+    path('',views.home,name="home")
 ]
