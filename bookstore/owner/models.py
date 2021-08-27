@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Book(models.Model):
-    book_name=models.CharField(max_length=100,unique=True)
+    book_name=models.CharField(max_length=100,unique=True,blank=True)
     author=models.CharField(max_length=80)
     price=models.PositiveIntegerField()
     copies=models.PositiveIntegerField()

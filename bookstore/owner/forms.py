@@ -39,3 +39,15 @@ class RegistrationForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-style"}))
+
+
+class BookChangeForm(forms.Form):
+
+    book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+    copies=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+
+
+class BookSearchForm(forms.Form):
+    book_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-style"}))

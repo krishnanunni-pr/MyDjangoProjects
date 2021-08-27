@@ -13,10 +13,23 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
-            <h1>Book deatils</h1>
+            <h1>Employee deatils</h1>
         </div>
         <div class="col-4"></div>
     </div>
+</div>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="" method="post">
+                {%csrf_token%}
+                {{form.as_p}}
+            <button type="submit" class="btn btn-success">Search</button>
+        </form>
+    </div>
+    <div class="col-1"></div>
+
 </div>
 <div class="container mt-3">
     <div class="row">
@@ -29,17 +42,18 @@
                     <td class="border">Salary</td>
                     <td class="border">Experience</td>
                     <td class="border">Action</td>
-                    <td class="border">Changes</td>
 
                 </tr>
                 {%for emps in emp%}
                 <tr>
                     <td class="border">{{emps.emp_name}}</td>
-                    <td class="border">{{emps.depaatments}}</td>
+                    <td class="border">{{emps.department}}</td>
                     <td class="border">{{emps.salary}}</td>
                     <td class="border">{{emps.exp}}</td>
-                    <td><a href="{%url 'empdeatials' emps.id%}"class="btn btn-primary" class="border">View</a></td>
-                    <td><a href=""class="btn btn-primary" class="border">Remove</a></td>
+                    <td class="border"><a href="{%url 'empdeatials' emps.id%}"class="btn btn-primary" class="border">View</a>
+                        <a href="{%url 'updateemp' emps.id%}" class="btn btn-warning">Update</a>
+                    <a href="{%url 'removeemp' emps.id%}" class="btn btn-danger" class="border">Remove</a>
+                    </td>
                 </tr>
                 {%endfor%}
             </table>

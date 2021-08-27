@@ -18,3 +18,15 @@ class EmployeeAddForm(forms.Form):
         if int(exp)<0:
             msg="Invalid experience"
             self.add_error("exp",msg)
+
+
+
+class EmployeeChangeForm(forms.Form):
+    emp_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    department=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    salary=forms.CharField(widget=forms.NumberInput(attrs={"class":"form-control"}))
+    exp=forms.CharField(widget=forms.NumberInput(attrs={"class":"form-control"}))
+
+
+class EmployeeSearchForm(forms.Form):
+    emp_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))

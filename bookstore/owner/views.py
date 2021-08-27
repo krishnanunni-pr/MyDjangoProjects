@@ -58,13 +58,46 @@ def book_create(request):
     return render(request,"book_add.html",context)
 
 def book_list(request):
+    form=forms.BookSearchForm()
     books=Book.objects.all()
     context={}
     context['books']=books
+    context['form']=form
+    if request.method=='POST':
+        form=forms.BookSearchForm(request.POST)
+        if form.is_valid():
+            book_name=form.cleaned_data['book_name']
+            books=Book.objects.filter(book_name__contains=book_name)
+            context['books']=books
+            return render(request,'book_list.html',context)
     return render(request,"book_list.html",context)
 
 def book_edit(request,id):
-    return render(request,"book_edit.html")
+    book=Book.objects.get(id=id)
+    data={
+        "book_name":book.book_name,
+        "author":book.author,
+        "price":book.price,
+        "copies":book.copies
+    }
+    form=forms.BookChangeForm(initial=data)
+    context={}
+    context["form"]=form
+    if request.method=='POST':
+        form=forms.BookChangeForm(request.POST)
+        if form.is_valid():
+            b_name=form.cleaned_data['book_name']
+            author_up=form.cleaned_data['author']
+            price_up=form.cleaned_data['price']
+            copies_up=form.cleaned_data['copies']
+            book.book_name=b_name
+            book.author=author_up
+            book.price=price_up
+            book.copies=copies_up
+            book.save()
+            return redirect('listbook')
+
+    return render(request,"book_edit.html",context)
 
 def book_remove(request,id):
     return render(request,"book_remove.html")
@@ -74,3 +107,8 @@ def book_detail(request,id):
     context={}
     context["book"]=book
     return render(request,"book_detail.html",context)
+
+def book_remove(request,id):
+    book=Book.objects.get(id=id)
+    book.delete()
+    return redirect('listbook')

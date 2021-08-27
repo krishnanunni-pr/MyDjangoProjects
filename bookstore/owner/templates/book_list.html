@@ -20,11 +20,22 @@
         <div class="col-4"></div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-3">
+        <form action="" method="post">
+              {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="col-3"></div>
+</div>
 <div class="container mt-3">
     <div class="row">
         <div class="col-3"></div>
-        <div class="col-7">
+        <div class="col-6">
             <table class="table-border">
                 <tr>
                     <td class="border">BOOK NAME</td>
@@ -39,12 +50,16 @@
                     <td class="border">{{book.author}}</td>
                     <td class="border">{{book.price}}</td>
                     <td class="border">{{book.copies}}</td>
-                    <td class="border"><a href="{%url 'bookdetails' book.id%}" class="btn btn-primary">View</a></td>
+                    <td class="border"><a href="{%url 'bookdetails' book.id%}" class="btn btn-primary">View</a>
+                        <a href="{%url 'changebook' book.id%}" class="btn btn-warning">Update</a>
+                        <a href="{%url 'removebook' book.id%}" class="btn btn-danger">Delete</a>
+                    </td>
+
                 </tr>
                 {%endfor%}
             </table>
         </div>
-        <div class="col-2"></div>
+        <div class="col-3"></div>
     </div>
 </div>
 

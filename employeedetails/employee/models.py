@@ -4,7 +4,7 @@ from django.db import models
 
 class Employee(models.Model):
     emp_name=models.CharField(max_length=100,unique=True)
-    departments=models.CharField(max_length=80)
+    department=models.CharField(max_length=80)
     salary=models.PositiveIntegerField()
     exp=models.PositiveIntegerField()
 
