@@ -7,6 +7,34 @@ from employee import forms
 def home(request):
     return render(request,"index.html")
 
+
+def signup(request):
+    form=forms.RegistrationForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            first_name=form.cleaned_data["first_name"]
+            username=form.cleaned_data["username"]
+            email=form.cleaned_data["email"]
+            password=form.cleaned_data["password"]
+            confirm_password=form.cleaned_data["confirm_password"]
+            return render(request,"options.html")
+    return render(request, "registration.html", context)
+
+def login(request):
+    form=forms.LoginForm()
+    context={}
+    context["form"]=form
+    if request.method=="POST":
+        form=forms.LoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data["username"]
+            password=form.cleaned_data["password"]
+            return render(request,"options.html")
+    return render(request,"login.html",context)
+
 def emp_add(request):
     form=forms.EmployeeAddForm()
     context={"form":form}
@@ -35,7 +63,7 @@ def employee_view(request):
         form=forms.EmployeeSearchForm(request.POST)
         if form.is_valid():
             emp_name=form.cleaned_data["emp_name"]
-            emp=Employee.objects.filter(emp_name__contains=emp_name)
+            emp=Employee.objects.filter(emp_name__contains=emp_name)|Employee.objects.filter(department__contains=emp_name)
             context['emp']=emp
             return render(request, "employee_view.html", context)
     return render(request,"employee_view.html",context)
