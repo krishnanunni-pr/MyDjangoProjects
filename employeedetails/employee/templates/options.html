@@ -9,16 +9,21 @@
     <link rel="stylesheet" href="{%static 'css/empstyle.css'%}">
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-            <a href="{%url 'employeeadd'%}" class="btn btn-primary">Add Employee</a>
-            <a href="{%url 'empview'%}" class="btn btn-primary">View employee details</a>
+<div class="container1">
+    <div class="row"></div>
+</div>
+<div class="container ">
+    <div class="row mt-5">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <a href="{%url 'employeeadd'%}" class="btn  mb-3 btn-lg d-grid gap-2 col-6 mx-auto btn-grad ">Add Employee</a>
+            <br>
+            <a href="{%url 'empview'%}" class="btn mb-3 btn-lg d-grid gap-2 col-6 mx-auto btn-grad ">View employee details</a>
         </div>
-        <div class="col-3"></div>
-        <div class="col-3"></div>
+        <div class="col-4"></div>
+
     </div>
+    <div class="row"></div>
 </div>
 </body>
 </html>

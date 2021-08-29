@@ -6,21 +6,52 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="{%static 'css/empstyle.css'%}">
+
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <form action="" method="post">
-                {%csrf_token%}
-                {{form.as_p}}
-                <input type="Submit" value="Login" class="btn btn-success">
-            </form>
-        </div>
-        <div class="col-4"></div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 mt-4 mb-1 px-4"><i class="fas fa-business-time fa-3x" style="color:#ABD9B8;"></i>
+                        </div>
+                        <div class="col-5"></div>
+                    </div>
+                    <p class="text-center mt-1 mb-3 " style="color: #ABD9B8; font-size:20px">Sign in to Get Details</p>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+
+    <div class="container mt-3 mb-3 mx-2 ">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-3 border border-secondary rounded block1">
+                <form action="" method="post">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input type="Submit" value="Login" class="btn btn-success mb-3 btn-sm d-grid gap-2 col-6 mx-auto btn-grad ">
+                </form>
+            </div>
+            <div class="col-5"></div>
+
+        </div>
+    </div>
+    <div class="container mt-2 mb-5 mx-2">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-3 border border-secondary rounded text-center block2">
+                <p class="m-3"><span class="text">First time user?</span> <a href="{%url 'signup'%}" class="atag">Register.</a></p>
+            </div>
+            <div class="col-5"></div>
+        </div>
     </div>
 
 </div>

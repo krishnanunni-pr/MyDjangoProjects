@@ -4,9 +4,9 @@ from employee.models import Employee
 from employee import forms
 # Create your views here.
 
-def home(request):
-    return render(request,"index.html")
-
+# def home(request):
+#     return render(request,"login.html")
+#
 
 def signup(request):
     form=forms.RegistrationForm()
