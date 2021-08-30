@@ -17,7 +17,12 @@
             <form action="" method="post" class="mt-4 mb-4  ">
                 {%csrf_token%}
                 <!--                    cross site request forgery-->
-                {{form.as_p}}
+<!--                {{form.as_p}}-->
+
+                {%for field in form%}
+                {{field.label_tag}}
+                {{field}}
+                {%endfor%}
 
 
                 <button type="submit" class="btn btn-success ">Add Book</button>

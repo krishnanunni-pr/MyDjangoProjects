@@ -1,12 +1,16 @@
 from django import forms
 from owner.models import Book
+from django.forms import ModelForm
 
-class AddBookForm(forms.Form):
+class AddBookForm(ModelForm):
+    class Meta:
+        model=Book
+        fields="__all__"
 
-    book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
-    copies=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+    # book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    # author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    # price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+    # copies=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
 
 
     def clean(self):

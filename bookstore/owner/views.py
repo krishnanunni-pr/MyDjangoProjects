@@ -44,13 +44,14 @@ def book_create(request):
     if request.method=="POST":
         form=forms.AddBookForm(request.POST)
         if form.is_valid():
-            book_name=form.cleaned_data["book_name"]
-            author=form.cleaned_data["author"]
-            price=form.cleaned_data["price"]
-            copies=form.cleaned_data["copies"]
-            # print(form.cleaned_data)
-            book=Book(book_name=book_name,author=author,price=price,copies=copies)
-            book.save()
+            # book_name=form.cleaned_data["book_name"]
+            # author=form.cleaned_data["author"]
+            # price=form.cleaned_data["price"]
+            # copies=form.cleaned_data["copies"]
+            # # print(form.cleaned_data)
+            # book=Book(book_name=book_name,author=author,price=price,copies=copies)
+            # book.save()
+            form.save()
             return redirect('listbook')
         else:
             return render(request,"book_add.html",{"form":form})
@@ -74,27 +75,28 @@ def book_list(request):
 
 def book_edit(request,id):
     book=Book.objects.get(id=id)
-    data={
-        "book_name":book.book_name,
-        "author":book.author,
-        "price":book.price,
-        "copies":book.copies
-    }
-    form=forms.BookChangeForm(initial=data)
+    # data={
+    #     "book_name":book.book_name,
+    #     "author":book.author,
+    #     "price":book.price,
+    #     "copies":book.copies
+    # }
+    form=forms.BookChangeForm(instance=book)
     context={}
     context["form"]=form
     if request.method=='POST':
-        form=forms.BookChangeForm(request.POST)
+        form=forms.BookChangeForm(request.POST,instance=book)
         if form.is_valid():
-            b_name=form.cleaned_data['book_name']
-            author_up=form.cleaned_data['author']
-            price_up=form.cleaned_data['price']
-            copies_up=form.cleaned_data['copies']
-            book.book_name=b_name
-            book.author=author_up
-            book.price=price_up
-            book.copies=copies_up
-            book.save()
+            # b_name=form.cleaned_data['book_name']
+            # author_up=form.cleaned_data['author']
+            # price_up=form.cleaned_data['price']
+            # copies_up=form.cleaned_data['copies']
+            # book.book_name=b_name
+            # book.author=author_up
+            # book.price=price_up
+            # book.copies=copies_up
+            # book.save()
+            form.save()
             return redirect('listbook')
 
     return render(request,"book_edit.html",context)
