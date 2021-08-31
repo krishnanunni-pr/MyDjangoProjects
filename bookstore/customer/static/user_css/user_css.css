@@ -1,0 +1,28 @@
+body{
+            background-repeat:no-repeat;
+            background-size:cover;
+           background-color: #8BC6EC;
+background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+
+}
+.c1{
+
+height:500px;
+}
+
+
+.form-style{
+
+width:100%;
+
+line-height:25px;
+font-size: 16px;
+font-weight: 400;
+line-height: 25px;
+border:2px solid ;
+border-color:#8ec5fc;
+border-radius:4px;
+padding: 6px 10px;
+background-clip: padding-box;
+
+}

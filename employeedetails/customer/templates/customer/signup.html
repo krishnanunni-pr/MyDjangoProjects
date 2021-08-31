@@ -6,6 +6,7 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'customer_css/customer_css.css'%}">
     <style>
         body{
                 background-repeat:no-repeat;
@@ -22,11 +23,11 @@
 <div class="container">
     <div class="row">
         <div class="col-1"></div>
-        <div class="col-10 border border-light rounded-3 block1 mt-5  ">
+        <div class="col-10 border border-light rounded-3 block1 mt-5 c1 ">
             <form action="" method="post" class="mt-4 mb-4 mx-5">
                 {%csrf_token%}
                 {{form.as_p}}
-                <button type="submit" class="btn btn-success ">SignUp</button>
+                <button type="submit" class=" btn btn-success mt-5  ">SignUp</button>
             </form>
         </div>
         <div class="col-1"></div>
