@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        body{
+                background-repeat:no-repeat;
+                background-size:cover;
+                background-color: #D9AFD9;
+                background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
+
+
+            }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 border border-light rounded-3 block1 mt-5  ">
+            <form action="" method="post" class="mt-4 mb-4 mx-5">
+                {%csrf_token%}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-success ">SignUp</button>
+            </form>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+</body>
+</html>
