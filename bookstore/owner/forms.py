@@ -7,6 +7,14 @@ class AddBookForm(ModelForm):
         model=Book
         fields="__all__"
 
+        widgets={
+            "book_name": forms.TextInput(attrs={"class": "form-control"}),
+            "author": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.NumberInput(attrs={"class": "form-control"}),
+            "copies": forms.NumberInput(attrs={"class": "form-control"}),
+        }
+
+
     # book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
     # author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
     # price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
@@ -45,12 +53,22 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-style"}))
 
 
-class BookChangeForm(forms.Form):
+class BookChangeForm(ModelForm):
+    class Meta:
+        model=Book
+        fields = "__all__"
+        widgets = {
+            "book_name": forms.TextInput(attrs={"class": "form-control"}),
+            "author": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.NumberInput(attrs={"class": "form-control"}),
+            "copies": forms.NumberInput(attrs={"class": "form-control"}),
+        }
 
-    book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
-    copies=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+    # book_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    # author=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
+    # price=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+    # copies=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-style"}))
+
 
 
 class BookSearchForm(forms.Form):

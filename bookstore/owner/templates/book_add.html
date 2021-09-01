@@ -14,18 +14,22 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4 d-flex justify-content-center   mt-5 mb-5 ">
-            <form action="" method="post" class="mt-4 mb-4  ">
+            <form action="" method="post" class="mt-4 mb-2  ">
                 {%csrf_token%}
                 <!--                    cross site request forgery-->
 <!--                {{form.as_p}}-->
 
                 {%for field in form%}
+                <div class="text-danger">
+                    {{field.errors}}
+                </div>
+
                 {{field.label_tag}}
                 {{field}}
                 {%endfor%}
 
 
-                <button type="submit" class="btn btn-success ">Add Book</button>
+                <button type="submit" class="btn btn-success mt-3 ">Add Book</button>
             </form>
         </div>
         <div class="col-4"></div>

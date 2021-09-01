@@ -11,6 +11,21 @@
 </head>
 <body class="emp">
 <div class="container">
+ <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+                {%for message in messages%}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <div class="text-success">
+                            {{message}}
+                        </div>
+                    {%endif%}
+                {%endfor%}
+            {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
     <div class="row">
         <div class="col-3"></div>
         <div class="col-5"></div>
@@ -53,8 +68,9 @@
                         <td class="border border-white border-2 text-center">{{emps.department}}</td>
                         <td class="border border-white border-2 text-center">{{emps.salary}}</td>
                         <td class="border border-white border-2 text-center">{{emps.exp}}</td>
-                        <td class="border border-white border-2 text-center"><a href="{%url 'empdeatials' emps.id%}" class="btn btn-primary mx-2"
-                                              class="border">View</a>
+                        <td class="border border-white border-2 text-center">
+                            <a href="{%url 'empdeatials' emps.id%}" class="btn btn-primary mx-2"
+                               class="border">View</a>
                             <a href="{%url 'updateemp' emps.id%}" class="btn btn-warning mx-2">Update</a>
                             <a href="{%url 'removeemp' emps.id%}" class="btn btn-danger mx-2" class="border">Remove</a>
                         </td>

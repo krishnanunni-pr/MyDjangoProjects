@@ -12,8 +12,8 @@
 <div class="container">
     <div class="row">
         <div class="col-2"></div>
-        <div class="col-8 d-flex justify-content-center mt-5 mb-5 border border-white rounded c1">
-            <form action="" method="post" class="form-style">
+        <div class="col-8 d-flex justify-content-center mt-3 mb-2 ">
+            <form action="" method="post" class="form-style" >
                 {%csrf_token%}
                 {{form.as_p}}
                 <button type="submit" class="btn btn-success mx-2">SignUp</button>

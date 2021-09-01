@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from customer import forms
 from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
 # Create your views here.
 
 def signup(request):
@@ -11,6 +12,7 @@ def signup(request):
         form=forms.UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request,"registration successful")
             return redirect("signin")
         else:
             return render(request,'customer/signup.html',{"form":form})
@@ -31,8 +33,17 @@ def signin(request):
             if user:
                 login(request,user)
                 return render(request,"customer/userhome.html")
+            else:
+                messages.error(request,"Invalid credentials")
+                return redirect("signin")
+        else:
+
+            return render(request,"customer/login.html",{"form":form})
     return render(request,"customer/login.html",context)
 
 def signout(request):
     logout(request)
     return redirect("signin")
+
+def home(request):
+    return render(request,"customer/base.html")

@@ -12,6 +12,38 @@
 <div class="container">
     <div class="row">
         <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+                {%for message in messages%}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <div class="text-success">
+                            {{message}}
+                        </div>
+                    {%endif%}
+<!--                {{message}}-->
+                {%endfor%}
+            {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+                {%for message in messages%}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="text-danger">
+                            {{message}}
+                        </div>
+                    {%endif%}
+<!--                {{message}}-->
+                {%endfor%}
+            {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
         <div class="col-4 ">
             <form action="" method="post" class="form-style">
                 {%csrf_token%}

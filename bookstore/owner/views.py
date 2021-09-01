@@ -4,6 +4,8 @@ from owner.models import Book
 
 from owner import forms
 
+from django.contrib import messages
+
 # Create your views here.
 
 def signupview(request):
@@ -42,7 +44,7 @@ def book_create(request):
     context={}
     context["form"]=form
     if request.method=="POST":
-        form=forms.AddBookForm(request.POST)
+        form= forms.AddBookForm(request.POST)
         if form.is_valid():
             # book_name=form.cleaned_data["book_name"]
             # author=form.cleaned_data["author"]
@@ -51,7 +53,9 @@ def book_create(request):
             # # print(form.cleaned_data)
             # book=Book(book_name=book_name,author=author,price=price,copies=copies)
             # book.save()
+            # print(context)
             form.save()
+            messages.success(request,"Book added successfully")
             return redirect('listbook')
         else:
             return render(request,"book_add.html",{"form":form})
@@ -82,8 +86,7 @@ def book_edit(request,id):
     #     "copies":book.copies
     # }
     form=forms.BookChangeForm(instance=book)
-    context={}
-    context["form"]=form
+    context={"form":form}
     if request.method=='POST':
         form=forms.BookChangeForm(request.POST,instance=book)
         if form.is_valid():

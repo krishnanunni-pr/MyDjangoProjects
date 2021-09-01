@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from employee.models import Employee
 
 from employee import forms
+from django.contrib import messages
 # Create your views here.
 
 # def home(request):
@@ -49,7 +50,8 @@ def emp_add(request):
             # emp=Employee(emp_name=emp_name,department=department,salary=salary,exp=exp)
             # emp.save()
             form.save()
-            return render(request,"add_employee.html",context)
+            messages.success(request,"Employee added successfully")
+            return redirect("empview")
         else:
             return render(request, "add_employee.html", {"form":form})
     return render(request,"add_employee.html",context)
