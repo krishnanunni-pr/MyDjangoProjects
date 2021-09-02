@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from customer import forms
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from employee.models import Employee
 # Create your views here.
 
 
@@ -34,7 +35,7 @@ def signin(request):
             user=authenticate(request,username=username,password=password)
             if user:
                 login(request,user)
-                return render(request,"customer/userhome.html")
+                return redirect("home")
             else:
                 messages.error(request,"Invalid credentials")
                 return redirect("signin")
@@ -48,4 +49,7 @@ def signout(request):
     return redirect("signin")
 
 def home(request):
-    return render(request,"customer/base.html")
+    emps=Employee.objects.all()
+    context={}
+    context["emps"]=emps
+    return render(request,"customer/userhome.html",context)

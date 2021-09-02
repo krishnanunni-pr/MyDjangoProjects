@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from customer import forms
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from owner.models import Book
 # Create your views here.
 
 def signup(request):
@@ -32,7 +33,7 @@ def signin(request):
             user=authenticate(request,username=username,password=password)
             if user:
                 login(request,user)
-                return render(request,"customer/userhome.html")
+                return redirect("home")
             else:
                 messages.error(request,"Invalid credentials")
                 return redirect("signin")
@@ -46,4 +47,7 @@ def signout(request):
     return redirect("signin")
 
 def home(request):
-    return render(request,"customer/base.html")
+    books=Book.objects.all()
+    context={}
+    context["books"]=books
+    return render(request,"customer/userhome.html",context)
