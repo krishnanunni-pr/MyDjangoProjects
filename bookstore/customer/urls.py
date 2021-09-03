@@ -6,5 +6,6 @@ urlpatterns=[
     path("accounts/signup",views.signup,name="signup"),
     path("accounts/signin",views.signin,name="signin"),
     path("accounts/signout",views.signout,name="signout"),
-    path("",views.home,name="home")
+    path("",views.home,name="home"),
+    path("orders/add/<int:p_id>",views.order_create,name="ordercreate")
 ]

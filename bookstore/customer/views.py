@@ -51,3 +51,20 @@ def home(request):
     context={}
     context["books"]=books
     return render(request,"customer/userhome.html",context)
+
+def order_create(request,p_id):
+    book=Book.objects.get(id=p_id)
+    form=forms.OrderForm(initial={"product":book})
+    context={"form":form,"book":book}
+    if request.method=="POST":
+        form=forms.OrderForm(request.POST)
+        if form.is_valid():
+            order=form.save(commit=False)
+            order.user=request.user
+            order.save()
+            messages.success(request,"order placed")
+            return redirect("home")
+        else:
+            return render(request,"customer/order_create.html", {"form":form})
+
+    return render(request,"customer/order_create.html",context)
