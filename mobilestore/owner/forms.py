@@ -1,31 +1,66 @@
 from django import forms
+from owner.models import Mobile
+from django.forms import ModelForm
 
 
 class RegistrationForm(forms.Form):
-    first_name=forms.CharField()
-    username=forms.CharField()
-    email=forms.CharField()
-    password1=forms.CharField()
-    password2=forms.CharField()
-
-    def clean(self):
-        print("validation")
+    first_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    username=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    email=forms.CharField(widget=forms.EmailInput(attrs={"class":"form-control"}))
+    password1=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
+    password2=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
 
 
 
 class LoginForm(forms.Form):
-    username=forms.CharField()
-    password=forms.CharField()
+    username=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    password=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
+
+
+class AddMobileForm(ModelForm):
+    class Meta:
+        model=Mobile
+        fields="__all__"
+
+        widgets={
+            "mobile_name": forms.TextInput(attrs={"class": "form-control"}),
+            "brand_name": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.NumberInput(attrs={"class": "form-control"}),
+            "copies": forms.NumberInput(attrs={"class": "form-control"})
+        }
+    # mobile_name=forms.CharField()
+    # brand_name=forms.CharField()
+    # price=forms.IntegerField()
+    # numbers=forms.IntegerField()
 
     def clean(self):
-        print("validation")
+        cleaned_data=super().clean()
+        mobile_name=cleaned_data["mobile_name"]
+        price=cleaned_data["price"]
+        copies=cleaned_data["copies"]
+        mobiles=Mobile.objects.filter(mobile_name=mobile_name)
+        if mobiles:
+            msg="This mobile already exists"
+            self.add_error("mobile_name",msg)
+        if int(price) < 0:
+            msg="Invalid price"
+            self.add_error("price",msg)
+        if int(copies)< 0:
+            msg="invalid copies"
+            self.add_error("copies",msg)
 
 
-class AddMobileForm(forms.Form):
-    mobile_name=forms.CharField()
-    brand_name=forms.CharField()
-    price=forms.IntegerField()
-    numbers=forms.IntegerField()
+class MobileSearchForm(forms.Form):
+    mobile_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
 
-    def clean(self):
-        print("validation")
+class MobileUpdateForm(ModelForm):
+    class Meta:
+        model=Mobile
+        fields = "__all__"
+
+        widgets = {
+            "mobile_name": forms.TextInput(attrs={"class": "form-control"}),
+            "brand_name": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.NumberInput(attrs={"class": "form-control"}),
+            "copies": forms.NumberInput(attrs={"class": "form-control"})
+        }

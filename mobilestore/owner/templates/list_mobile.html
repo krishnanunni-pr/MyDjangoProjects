@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS only -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+<body class="book">
+<div class="container mt-5">
+<!--     <div class="row">-->
+<!--        <div class="col-4"></div>-->
+<!--        <div class="col-4">-->
+<!--            {%if messages%}-->
+<!--                {%for message in messages%}-->
+<!--                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}-->
+<!--                        <div class="text-success">-->
+<!--                            {{message}}-->
+<!--                        </div>-->
+<!--                    {%endif%}-->
+<!--                {%endfor%}-->
+<!--            {%endif%}-->
+<!--        </div>-->
+<!--        <div class="col-4"></div>-->
+<!--    </div>-->
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <h1>Mobile deatils</h1>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-2"></div>
+    <div class="col-2">
+        <form action="" method="post">
+              {%csrf_token%}
+              {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <div class="col-2"></div>
+</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <table class="table-border">
+                <tr>
+                    <td class="border">MOBILE NAME</td>
+                    <td class="border">BRAND</td>
+                    <td class="border">PRICE</td>
+                    <td class="border">COPIES</td>
+                    <td class="border">ACTION</td>
+                </tr>
+                {%for mobile in mobiles%}
+                <tr>
+                    <td class="border">{{mobile.mobile_name}}</td>
+                    <td class="border">{{mobile.brand_name}}</td>
+                    <td class="border">{{mobile.price}}</td>
+                    <td class="border">{{mobile.copies}}</td>
+                    <td class="border"><a href="{%url 'mobiledetails' mobile.id%}" class="btn btn-primary">View</a>
+                        <a href="{%url 'mobileupdate' mobile.id%}" class="btn btn-warning">Update</a>
+                        <a href="{%url 'mobileremove' mobile.id%}" class="btn btn-danger">Delete</a>
+                    </td>
+
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+</body>
+</html>
