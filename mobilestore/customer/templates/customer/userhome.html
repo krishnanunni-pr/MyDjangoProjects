@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>welcome</h1>
-</body>
-</html>
+{%extends 'customer/base.html'%}
+
+
+{%block body_block%}
+
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        {%if messages%}
+        {%for message in messages%}
+        {{message}}
+        {%endfor%}
+        {%endif%}
+    </div>
+    <div class="col-4"></div>
+</div>
+
+<div class="row">
+    {%for mobile in mobiles%}
+
+    <div class="col-4 mt-5">
+        <div class="card" style="width: 80%;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Mobilename : {{mobile.mobile_name}}</li>
+                <li class="list-group-item">Brand : {{mobile.brand_name}}</li>
+                <li class="list-group-item">Price : {{mobile.price}}</li>
+                <li class="list-group-item">Copies : {{mobile.copies}}</li>
+                <li class="list-group-item"><a href="{%url 'ordercreate' mobile.id%}" class="btn btn-success">Order This</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {%endfor%}
+</div>
+
+{% endblock %}

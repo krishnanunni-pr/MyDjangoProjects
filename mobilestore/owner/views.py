@@ -14,13 +14,15 @@ def registration(request):
     if request.method=="POST":
         form=forms.RegistrationForm(request.POST)
         if form.is_valid():
-            first_name=form.cleaned_data["first_name"]
-            username=form.cleaned_data["username"]
-            email=form.cleaned_data["email"]
-            password1=form.cleaned_data["password1"]
-            password2=form.cleaned_data["password2"]
-
+            # first_name=form.cleaned_data["first_name"]
+            # username=form.cleaned_data["username"]
+            # email=form.cleaned_data["email"]
+            # password1=form.cleaned_data["password1"]
+            # password2=form.cleaned_data["password2"]
+            form.save()
             return redirect("home")
+        else:
+            return render(request, "register.html",{"form":form})
     return render(request,"register.html",context)
 
 
