@@ -7,7 +7,7 @@ class Mobile(models.Model):
     brand_name=models.CharField(max_length=60)
     price=models.PositiveIntegerField()
     copies=models.PositiveIntegerField()
-
+    image=models.ImageField(upload_to="images",null=True)
 
     def __str__(self):
         return self.mobile_name

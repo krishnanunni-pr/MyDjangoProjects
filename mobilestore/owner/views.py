@@ -20,7 +20,7 @@ def registration(request):
             # password1=form.cleaned_data["password1"]
             # password2=form.cleaned_data["password2"]
             form.save()
-            return redirect("home")
+            return redirect("signin")
         else:
             return render(request, "register.html",{"form":form})
     return render(request,"register.html",context)
@@ -34,8 +34,8 @@ def loginview(request):
     if request.method=="POST":
         form=forms.LoginForm(request.POST)
         if form.is_valid():
-            username=form.cleaned_data["username"]
-            password=form.cleaned_data["password"]
+            # username=form.cleaned_data["username"]
+            # password=form.cleaned_data["password"]
             # print(username,password)
             return render(request,"owner_options.html")
     return render(request,"login.html",context)

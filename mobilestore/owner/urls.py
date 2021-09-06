@@ -4,7 +4,7 @@ from owner import views
 
 urlpatterns=[
     path("accounts/register",views.registration,name="signup"),
-    path("accounts/login",views.loginview,name="login"),
+    path("accounts/signin",views.loginview,name="signin"),
     path("mobiles/add",views.add_mobile,name="addmobile"),
     path("mobiles/list",views.mobile_list,name="listmobile"),
     path("mobiles/details/<int:id>",views.mobile_details,name="mobiledetails"),
