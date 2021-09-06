@@ -7,5 +7,7 @@ urlpatterns=[
     path("accounts/signin",views.signin,name="signin"),
     path("accounts/signout",views.signout,name="signout"),
     path("",views.home,name="home"),
-    path("orders/add/<int:p_id>",views.order_create,name="ordercreate")
+    path("books/orders/add/<int:p_id>",views.order_create,name="ordercreate"),
+    path("books/orders",views.order_deatils,name="orderdetails"),
+    path("books/orders/remove/<int:id>",views.cancel_order,name="cancel_order")
 ]

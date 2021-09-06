@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from customer import forms
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from owner.models import Book
+from owner.models import Book,Order
 # Create your views here.
 
 def signup(request):
@@ -43,28 +43,51 @@ def signin(request):
     return render(request,"customer/login.html",context)
 
 def signout(request):
-    logout(request)
-    return redirect("signin")
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect("signin")
+    else:
+        return redirect("signin")
 
 def home(request):
-    books=Book.objects.all()
-    context={}
-    context["books"]=books
-    return render(request,"customer/userhome.html",context)
+    if request.user.is_authenticated:
+        books = Book.objects.all()
+        context = {"books": books}
+        return render(request, "customer/userhome.html", context)
+    else:
+        return redirect("signin")
 
 def order_create(request,p_id):
-    book=Book.objects.get(id=p_id)
-    form=forms.OrderForm(initial={"product":book})
-    context={"form":form,"book":book}
-    if request.method=="POST":
-        form=forms.OrderForm(request.POST)
-        if form.is_valid():
-            order=form.save(commit=False)
-            order.user=request.user
-            order.save()
-            messages.success(request,"order placed")
-            return redirect("home")
-        else:
-            return render(request,"customer/order_create.html", {"form":form})
+    if request.user.is_authenticated:
+        book=Book.objects.get(id=p_id)
+        form=forms.OrderForm(initial={"product":book})
+        context={"form":form,"book":book}
+        if request.method=="POST":
+            form=forms.OrderForm(request.POST)
+            if form.is_valid():
+                order=form.save(commit=False)
+                order.user=request.user
+                order.save()
+                messages.success(request,"order placed")
+                return redirect("home")
+            else:
+                return render(request,"customer/order_create.html", {"form":form})
+    else:
+        return redirect("signin")
 
     return render(request,"customer/order_create.html",context)
+
+
+def order_deatils(request):
+    if request.user.is_authenticated:
+        orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
+        context={"orders":orders}
+        return render(request,"customer/order_details.html",context)
+    else:
+        return redirect("signin")
+
+def cancel_order(request,id):
+    order=Order.objects.get(id=id)
+    order.status="cancelled"
+    order.save()
+    return redirect("home")

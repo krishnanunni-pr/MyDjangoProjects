@@ -6,6 +6,7 @@ class Book(models.Model):
     author=models.CharField(max_length=80)
     price=models.PositiveIntegerField()
     copies=models.PositiveIntegerField()
+    image=models.ImageField(upload_to="images",null=True)
     
 
 
@@ -45,5 +46,5 @@ class Order(models.Model):
 
     status=models.CharField(max_length=20,choices=options,default="ordered")
     phone_number=models.CharField(max_length=20)
-    exp_delivery_date=models.DateField(null=True)
+    exp_delivery_date=models.DateField(blank=True,null=True)
 
