@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from owner.models import Mobile
+from owner.models import Mobile,Order
 
 from owner import forms
 
@@ -47,7 +47,7 @@ def add_mobile(request):
     context={}
     context["form"]=form
     if request.method=="POST":
-        form=forms.AddMobileForm(request.POST)
+        form=forms.AddMobileForm(request.POST,request.FILES)
         if form.is_valid():
             # mobile_name=form.cleaned_data["mobile_name"]
             # brand_name=form.cleaned_data["brand_name"]
@@ -86,7 +86,7 @@ def mobile_update(request,id):
     form=forms.MobileUpdateForm(instance=mobile)
     context={"form":form}
     if request.method=="POST":
-        form=forms.MobileUpdateForm(request.POST,instance=mobile)
+        form=forms.MobileUpdateForm(request.POST,instance=mobile,files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect("listmobile")
@@ -98,3 +98,13 @@ def mobile_remove(request,id):
     mobile.delete()
     return redirect("listmobile")
 
+def dashboard(request):
+    orders=Order.objects.filter(status="ordered")
+    context={"orders":orders}
+    return render(request,"dashboard.html",context)
+
+def order_status_change(request,id):
+    order=Order.objects.get(id=id)
+    form=forms.OrderEditForm()
+    context={"order":order,"form":form}
+    return render(request,"ordered_change.html",context)

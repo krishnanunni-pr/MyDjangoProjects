@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from owner.models import Mobile
+from owner.models import Mobile,Order
 from django.forms import ModelForm
 
 
@@ -81,3 +81,8 @@ class MobileUpdateForm(ModelForm):
             "price": forms.NumberInput(attrs={"class": "form-control"}),
             "copies": forms.NumberInput(attrs={"class": "form-control"})
         }
+
+class OrderEditForm(forms.ModelForm):
+    class Meta:
+        model=Order
+        fields=["status","exp_delivery_date"]

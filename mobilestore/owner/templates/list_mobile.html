@@ -28,6 +28,7 @@
         <div class="col-10">
             <table class="table-border">
                 <tr>
+                    <td class="border">IMAGE</td>
                     <td class="border">MOBILE NAME</td>
                     <td class="border">BRAND</td>
                     <td class="border">PRICE</td>
@@ -36,6 +37,7 @@
                 </tr>
                 {%for mobile in mobiles%}
                 <tr>
+                    <td class="border"><img src="{{mobile.image.url}}" alt="" style="height:80px; width:100%;"></td>
                     <td class="border">{{mobile.mobile_name}}</td>
                     <td class="border">{{mobile.brand_name}}</td>
                     <td class="border">{{mobile.price}}</td>

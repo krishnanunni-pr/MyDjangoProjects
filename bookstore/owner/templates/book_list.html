@@ -12,28 +12,22 @@
 </head>
 <body class="book">
 <div class="container mt-5">
-     <div class="row">
+    <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
             {%if messages%}
-                {%for message in messages%}
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                        <div class="text-success">
-                            {{message}}
-                        </div>
-                    {%endif%}
-                {%endfor%}
+            {%for message in messages%}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="text-success">
+                {{message}}
+            </div>
+            {%endif%}
+            {%endfor%}
             {%endif%}
         </div>
         <div class="col-4"></div>
     </div>
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <h1>Book deatils</h1>
-        </div>
-        <div class="col-4"></div>
-    </div>
+
 </div>
 <div class="row">
     <div class="col-3"></div>
@@ -41,19 +35,20 @@
     <div class="col-2"></div>
     <div class="col-2">
         <form action="" method="post">
-              {%csrf_token%}
-              {{form.as_p}}
-        <button type="submit" class="btn btn-primary">Search</button>
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
     <div class="col-2"></div>
 </div>
-<div class="container mt-3">
+
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <table class="table-border">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table class="table">
                 <tr>
+                    <td class="border">IMAGE</td>
                     <td class="border">BOOK NAME</td>
                     <td class="border">AUTHOR</td>
                     <td class="border">PRICE</td>
@@ -62,6 +57,7 @@
                 </tr>
                 {%for book in books%}
                 <tr>
+                    <td class="border"><img src="{{book.image.url}}" alt="" style="height:100px; width:100px;"></td>
                     <td class="border">{{book.book_name}}</td>
                     <td class="border">{{book.author}}</td>
                     <td class="border">{{book.price}}</td>
@@ -75,7 +71,7 @@
                 {%endfor%}
             </table>
         </div>
-        <div class="col-3"></div>
+        <div class="col-1"></div>
     </div>
 </div>
 

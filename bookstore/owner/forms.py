@@ -1,5 +1,5 @@
 from django import forms
-from owner.models import Book
+from owner.models import Book,Order
 from django.forms import ModelForm
 
 class AddBookForm(ModelForm):
@@ -73,3 +73,9 @@ class BookChangeForm(ModelForm):
 
 class BookSearchForm(forms.Form):
     book_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-style"}))
+
+
+class OrderEditForm(forms.ModelForm):
+    class Meta:
+        model=Order
+        fields=["status","exp_delivery_date"]

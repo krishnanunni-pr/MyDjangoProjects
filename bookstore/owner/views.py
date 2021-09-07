@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from owner.models import Book
+from owner.models import Book,Order
 
 from owner import forms
 
@@ -44,7 +44,7 @@ def book_create(request):
     context={}
     context["form"]=form
     if request.method=="POST":
-        form= forms.AddBookForm(request.POST)
+        form= forms.AddBookForm(request.POST,request.FILES)
         if form.is_valid():
             # book_name=form.cleaned_data["book_name"]
             # author=form.cleaned_data["author"]
@@ -88,7 +88,7 @@ def book_edit(request,id):
     form=forms.BookChangeForm(instance=book)
     context={"form":form}
     if request.method=='POST':
-        form=forms.BookChangeForm(request.POST,instance=book)
+        form=forms.BookChangeForm(request.POST,instance=book,files=request.FILES)
         if form.is_valid():
             # b_name=form.cleaned_data['book_name']
             # author_up=form.cleaned_data['author']
@@ -117,3 +117,14 @@ def book_remove(request,id):
     book=Book.objects.get(id=id)
     book.delete()
     return redirect('listbook')
+
+def dashboard(request):
+    orders=Order.objects.filter(status="ordered")
+    context={"orders":orders}
+    return render(request,"dashboard.html",context)
+
+def order_status_change(request,id):
+    order=Order.objects.get(id=id)
+    form=forms.OrderEditForm()
+    context={"order":order,"form":form}
+    return render(request,"order_change.html",context)
