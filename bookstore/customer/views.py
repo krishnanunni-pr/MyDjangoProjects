@@ -67,6 +67,9 @@ def order_create(request,p_id):
             if form.is_valid():
                 order=form.save(commit=False)
                 order.user=request.user
+                book.copies-=1
+                book.save()
+                print(book.copies)
                 order.save()
                 messages.success(request,"order placed")
                 return redirect("home")
@@ -88,6 +91,10 @@ def order_deatils(request):
 
 def cancel_order(request,id):
     order=Order.objects.get(id=id)
+    book=Book.objects.get(id=order.product.id)
+
     order.status="cancelled"
     order.save()
+    book.copies+=1
+    book.save()
     return redirect("home")

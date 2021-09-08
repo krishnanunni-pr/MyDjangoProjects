@@ -79,3 +79,10 @@ class OrderEditForm(forms.ModelForm):
     class Meta:
         model=Order
         fields=["status","exp_delivery_date"]
+        widgets={
+
+            "exp_delivery_date":forms.DateInput(attrs={"type":"date"}),
+            "status":forms.Select(attrs={"class":"form-select"})
+
+
+        }

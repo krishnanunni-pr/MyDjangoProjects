@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date,timedelta
 
 # Create your models here.
 class Book(models.Model):
@@ -34,6 +35,7 @@ class Book(models.Model):
 
 class Order(models.Model):
 
+    edd=date.today()+timedelta(days=5)
     product=models.ForeignKey(Book,on_delete=models.CASCADE)
     user=models.CharField(max_length=20)
     address=models.CharField(max_length=30)
@@ -46,5 +48,5 @@ class Order(models.Model):
 
     status=models.CharField(max_length=20,choices=options,default="ordered")
     phone_number=models.CharField(max_length=20)
-    exp_delivery_date=models.DateField(null=True)
+    exp_delivery_date=models.DateField(default=edd,null=True)
 

@@ -69,6 +69,8 @@ def order_create(request,m_id):
             if form.is_valid():
                 order=form.save(commit=False)
                 order.user=request.user
+                mobile.copies-=1
+                mobile.save()
                 order.save()
                 messages.success(request,"order placed")
                 return redirect("home")
@@ -88,7 +90,13 @@ def order_deatils(request):
         return redirect("signin")
 
 def cancel_order(request,id):
-    order=Order.objects.get(id=id)
-    order.status="cancelled"
-    order.save()
-    return redirect("home")
+    if request.user.is_authenticated:
+        order=Order.objects.get(id=id)
+        mobile=Mobile.objects.get(id=order.product.id)
+        order.status="cancelled"
+        order.save()
+        mobile.copies+=1
+        mobile.save()
+        return redirect("home")
+    else:
+        return redirect("signin")

@@ -6,6 +6,8 @@ from owner import forms
 
 from django.contrib import messages
 
+from django.db.models import Count
+
 # Create your views here.
 
 def signupview(request):
@@ -119,12 +121,28 @@ def book_remove(request,id):
     return redirect('listbook')
 
 def dashboard(request):
+    reports=Order.objects.values("product__book_name").annotate(counts=Count("product")).exclude(status="cancelled")
+    books=Book.objects.all()
     orders=Order.objects.filter(status="ordered")
-    context={"orders":orders}
+    context={"orders":orders,"reports":reports,"books":books}
     return render(request,"dashboard.html",context)
 
 def order_status_change(request,id):
     order=Order.objects.get(id=id)
+
     form=forms.OrderEditForm()
     context={"order":order,"form":form}
+    if request.method=="POST":
+        form=forms.OrderEditForm(request.POST,instance=order)
+        if form.is_valid():
+            if order.status == "cancelled":
+                book = Book.objects.get(id=order.product.id)
+                # print("first cp", book.copies)
+                book.copies += 1
+                # print("edited", book.copies)
+                book.save()
+            form.save()
+            return redirect("dashboard")
+
+
     return render(request,"order_change.html",context)

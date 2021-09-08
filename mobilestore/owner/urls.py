@@ -12,6 +12,7 @@ urlpatterns=[
     path("mobiles/update/<int:id>",views.mobile_update,name="mobileupdate"),
     path("mobiles/remove/<int:id>",views.mobile_remove,name="mobileremove"),
     path("",views.loginview,name="home"),
-    path("orders/totalorder/<int:id>",views.order_status_change,name="orderstatuschange")
+    path("orders/totalorder/<int:id>",views.order_status_change,name="orderstatuschange"),
+
 
 ]

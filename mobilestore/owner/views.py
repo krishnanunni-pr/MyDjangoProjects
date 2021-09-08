@@ -4,6 +4,11 @@ from owner.models import Mobile,Order
 
 from owner import forms
 
+from django.contrib import messages
+
+from django.db.models import Count
+
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 
 
@@ -99,12 +104,23 @@ def mobile_remove(request,id):
     return redirect("listmobile")
 
 def dashboard(request):
+    reports=Order.objects.values("product__mobile_name").annotate(counts=Count("product")).exclude(status="cancelled")
+    mobiles=Mobile.objects.all()
     orders=Order.objects.filter(status="ordered")
-    context={"orders":orders}
+    context={"orders":orders,"reports":reports,"mobiles":mobiles}
     return render(request,"dashboard.html",context)
 
 def order_status_change(request,id):
     order=Order.objects.get(id=id)
     form=forms.OrderEditForm()
     context={"order":order,"form":form}
+    if request.method=="POST":
+        form=forms.OrderEditForm(request.POST,instance=order)
+        if form.is_valid():
+            if order.status =="cancelled":
+                mobile=Mobile.objects.get(id=order.product.id)
+                mobile.copies+=1
+                mobile.save()
+            form.save()
+            return redirect("dashboard")
     return render(request,"ordered_change.html",context)
