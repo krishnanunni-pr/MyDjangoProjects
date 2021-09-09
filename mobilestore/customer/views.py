@@ -3,6 +3,7 @@ from customer import forms
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Mobile,Order
+from customer.filters import MobileFilter
 # Create your views here.
 
 def signup(request):
@@ -100,3 +101,7 @@ def cancel_order(request,id):
         return redirect("home")
     else:
         return redirect("signin")
+
+def mobilesearch(request):
+    filters=MobileFilter(request.GET,queryset=Mobile.objects.all())
+    return render(request,"customer/mobilefilter.html",{"filter":filters})

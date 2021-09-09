@@ -121,8 +121,8 @@ def book_remove(request,id):
     return redirect('listbook')
 
 def dashboard(request):
-    reports=Order.objects.values("product__book_name").annotate(counts=Count("product")).exclude(status="cancelled")
-    books=Book.objects.all()
+    reports=Order.objects.values("product__book_name").annotate(counts=Count("product")).exclude(status="cancelled").order_by("counts")
+    books=Book.objects.all().order_by("copies")
     orders=Order.objects.filter(status="ordered")
     context={"orders":orders,"reports":reports,"books":books}
     return render(request,"dashboard.html",context)

@@ -3,6 +3,7 @@ from customer import forms
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Book,Order
+from customer.filters import BookFilter
 # Create your views here.
 
 def signup(request):
@@ -98,3 +99,8 @@ def cancel_order(request,id):
     book.copies+=1
     book.save()
     return redirect("home")
+
+
+def book_search(request):
+    filters=BookFilter(request.GET,queryset=Book.objects.all())
+    return render(request,"customer/bookfilter.html",{"filter":filters})

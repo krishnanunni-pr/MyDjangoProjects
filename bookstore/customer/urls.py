@@ -9,5 +9,6 @@ urlpatterns=[
     path("",views.home,name="home"),
     path("books/orders/add/<int:p_id>",views.order_create,name="ordercreate"),
     path("books/orders",views.order_deatils,name="orderdetails"),
-    path("books/orders/remove/<int:id>",views.cancel_order,name="cancel_order")
+    path("books/orders/remove/<int:id>",views.cancel_order,name="cancel_order"),
+    path("books/search",views.book_search,name="booksearch")
 ]

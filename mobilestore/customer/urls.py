@@ -8,5 +8,6 @@ urlpatterns=[
     path("",views.home,name="home"),
     path("mobiles/orders/add/<int:m_id>",views.order_create,name="ordercreate"),
     path("mobiles/orders",views.order_deatils,name="orderdetails"),
-    path("mobiles/orders/remove/<int:id>",views.cancel_order,name="cancel_order")
+    path("mobiles/orders/remove/<int:id>",views.cancel_order,name="cancel_order"),
+    path("mobiles/search",views.mobilesearch,name="mobilesearch")
 ]

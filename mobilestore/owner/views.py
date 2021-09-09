@@ -104,8 +104,8 @@ def mobile_remove(request,id):
     return redirect("listmobile")
 
 def dashboard(request):
-    reports=Order.objects.values("product__mobile_name").annotate(counts=Count("product")).exclude(status="cancelled")
-    mobiles=Mobile.objects.all()
+    reports=Order.objects.values("product__mobile_name").annotate(counts=Count("product")).exclude(status="cancelled").order_by("counts")
+    mobiles=Mobile.objects.all().order_by("copies")
     orders=Order.objects.filter(status="ordered")
     context={"orders":orders,"reports":reports,"mobiles":mobiles}
     return render(request,"dashboard.html",context)
