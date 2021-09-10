@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Book,Order
 from customer.filters import BookFilter
+from customer.decorators import login_required
 # Create your views here.
 
 def signup(request):
@@ -43,54 +44,56 @@ def signin(request):
             return render(request,"customer/login.html",{"form":form})
     return render(request,"customer/login.html",context)
 
-def signout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect("signin")
-    else:
-        return redirect("signin")
 
-def home(request):
-    if request.user.is_authenticated:
-        books = Book.objects.all()
-        context = {"books": books}
-        return render(request, "customer/userhome.html", context)
-    else:
-        return redirect("signin")
+@login_required
+def signout(request,*args,**kwargs):
 
-def order_create(request,p_id):
-    if request.user.is_authenticated:
-        book=Book.objects.get(id=p_id)
-        form=forms.OrderForm(initial={"product":book})
-        context={"form":form,"book":book}
-        if request.method=="POST":
-            form=forms.OrderForm(request.POST)
-            if form.is_valid():
-                order=form.save(commit=False)
-                order.user=request.user
-                book.copies-=1
-                book.save()
-                print(book.copies)
-                order.save()
-                messages.success(request,"order placed")
-                return redirect("home")
-            else:
-                return render(request,"customer/order_create.html", {"form":form})
-    else:
-        return redirect("signin")
+    logout(request)
+    return redirect("signin")
+
+
+@login_required
+def home(request,*args,**kwargs):
+
+    books = Book.objects.all()
+    context = {"books": books}
+    return render(request, "customer/userhome.html", context)
+
+
+@login_required
+def order_create(request,p_id,*args,**kwargs):
+
+    book=Book.objects.get(id=p_id)
+    form=forms.OrderForm(initial={"product":book})
+    context={"form":form,"book":book}
+    if request.method=="POST":
+        form=forms.OrderForm(request.POST)
+        if form.is_valid():
+            order=form.save(commit=False)
+            order.user=request.user
+            book.copies-=1
+            book.save()
+            print(book.copies)
+            order.save()
+            messages.success(request,"order placed")
+            return redirect("home")
+        else:
+            return render(request,"customer/order_create.html", {"form":form})
+
 
     return render(request,"customer/order_create.html",context)
 
 
-def order_deatils(request):
-    if request.user.is_authenticated:
-        orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
-        context={"orders":orders}
-        return render(request,"customer/order_details.html",context)
-    else:
-        return redirect("signin")
+@login_required
+def order_deatils(request,*args,**kwargs):
 
-def cancel_order(request,id):
+    orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
+    context={"orders":orders}
+    return render(request,"customer/order_details.html",context)
+
+
+@login_required
+def cancel_order(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
     book=Book.objects.get(id=order.product.id)
 
@@ -101,6 +104,7 @@ def cancel_order(request,id):
     return redirect("home")
 
 
-def book_search(request):
+@login_required
+def book_search(request,*args,**kwargs):
     filters=BookFilter(request.GET,queryset=Book.objects.all())
     return render(request,"customer/bookfilter.html",{"filter":filters})
