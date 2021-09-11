@@ -9,11 +9,10 @@ def login_required(func):
 
     return wrapper
 
-
 def admin_permission_required(func):
     def wrapper(request,id=None,*args,**kwargs):
         if request.user.is_superuser:
-            return redirect("signin")
+            return redirect("owner_signin")
         else:
             return func(request,id,*args,**kwargs)
 

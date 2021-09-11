@@ -4,8 +4,9 @@ from owner import views
 
 urlpatterns=[
     path("",views.dashboard,name="dashboard"),
-    path("accounts/register",views.registration,name="signup"),
-    path("accounts/signin",views.loginview,name="signin"),
+    path("accounts/register",views.registration,name="owner_signup"),
+    path("accounts/signin",views.loginview,name="owner_signin"),
+    path("accounts/signout",views.signout,name="owner_signout"),
     path("mobiles/add",views.add_mobile,name="addmobile"),
     path("mobiles/list",views.mobile_list,name="listmobile"),
     path("mobiles/details/<int:id>",views.mobile_details,name="mobiledetails"),

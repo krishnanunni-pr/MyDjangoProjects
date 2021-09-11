@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Mobile,Order
 from customer.filters import MobileFilter
+from customer.decorators import login_required
 # Create your views here.
 
 def signup(request):
@@ -43,65 +44,65 @@ def signin(request):
     return render(request,"customer/login.html",context)
 
 
-def signout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect("signin")
-    else:
-        return redirect("signin")
+@login_required
+def signout(request,*args,**kwargs):
+
+    logout(request)
+    return redirect("signin")
 
 
-def home(request):
-    if request.user.is_authenticated:
-        mobiles=Mobile.objects.all()
-        context={}
-        context["mobiles"]=mobiles
-        return render(request,"customer/userhome.html",context)
-    else:
-        return redirect("signin")
+@login_required
+def home(request,*args,**kwargs):
 
-def order_create(request,m_id):
-    if request.user.is_authenticated:
-        mobile=Mobile.objects.get(id=m_id)
-        form=forms.OrderForm(initial={"product":mobile})
-        context={"form":form,"mobile":mobile}
-        if request.method=="POST":
-            form=forms.OrderForm(request.POST)
-            if form.is_valid():
-                order=form.save(commit=False)
-                order.user=request.user
-                mobile.copies-=1
-                mobile.save()
-                order.save()
-                messages.success(request,"order placed")
-                return redirect("home")
-            else:
-                return render(request,"customer/ordered.html", {"form":form})
-    else:
-        return redirect("signin")
+    mobiles=Mobile.objects.all()
+    context={}
+    context["mobiles"]=mobiles
+    return render(request,"customer/userhome.html",context)
+
+
+@login_required
+def order_create(request,m_id,*args,**kwargs):
+
+    mobile=Mobile.objects.get(id=m_id)
+    form=forms.OrderForm(initial={"product":mobile})
+    context={"form":form,"mobile":mobile}
+    if request.method=="POST":
+        form=forms.OrderForm(request.POST)
+        if form.is_valid():
+            order=form.save(commit=False)
+            order.user=request.user
+            mobile.copies-=1
+            mobile.save()
+            order.save()
+            messages.success(request,"order placed")
+            return redirect("home")
+        else:
+            return render(request,"customer/ordered.html", {"form":form})
+
 
     return render(request,"customer/ordered.html",context)
 
-def order_deatils(request):
-    if request.user.is_authenticated:
-        orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
-        context={"orders":orders}
-        return render(request,"customer/order_details.html",context)
-    else:
-        return redirect("signin")
 
-def cancel_order(request,id):
-    if request.user.is_authenticated:
-        order=Order.objects.get(id=id)
-        mobile=Mobile.objects.get(id=order.product.id)
-        order.status="cancelled"
-        order.save()
-        mobile.copies+=1
-        mobile.save()
-        return redirect("home")
-    else:
-        return redirect("signin")
+@login_required
+def order_deatils(request,*args,**kwargs):
 
-def mobilesearch(request):
+    orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
+    context={"orders":orders}
+    return render(request,"customer/order_details.html",context)
+
+
+def cancel_order(request,id,*args,**kwargs):
+
+    order=Order.objects.get(id=id)
+    mobile=Mobile.objects.get(id=order.product.id)
+    order.status="cancelled"
+    order.save()
+    mobile.copies+=1
+    mobile.save()
+    return redirect("home")
+
+
+@login_required
+def mobilesearch(request,*args,**kwargs):
     filters=MobileFilter(request.GET,queryset=Mobile.objects.all())
     return render(request,"customer/mobilefilter.html",{"filter":filters})

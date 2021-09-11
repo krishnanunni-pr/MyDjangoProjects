@@ -2,49 +2,45 @@
 {%extends 'base_owner.html'%}
 
 {%block body_block%}
-<div class="row">
-    <div class="col-4"></div>
+
+<div class="row mt-1">
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-1"></div>
     <div class="col-4">
-        <h1 class="display-5 fw-bold">details</h1>
-    </div>
-    <div class="col-4"></div>
-</div>
-<div class="row">
-    <div class="col-3"></div>
-    <div class="col-3"></div>
-    <div class="col-2"></div>
-    <div class="col-2">
         <form action="" method="post">
               {%csrf_token%}
               {{form.as_p}}
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
         </form>
     </div>
-    <div class="col-2"></div>
+    <div class="col-1"></div>
+
 </div>
+
 <div class="container mt-3">
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
-            <table class="table-border">
+            <table class="table text-center">
                 <tr>
-                    <td class="border">IMAGE</td>
-                    <td class="border">MOBILE NAME</td>
-                    <td class="border">BRAND</td>
-                    <td class="border">PRICE</td>
-                    <td class="border">COPIES</td>
-                    <td class="border">ACTION</td>
+                    <td >IMAGE</td>
+                    <td >MOBILE NAME</td>
+                    <td >BRAND</td>
+                    <td >PRICE</td>
+                    <td >COPIES</td>
+                    <td >ACTION</td>
                 </tr>
                 {%for mobile in mobiles%}
                 <tr>
-                    <td class="border"><img src="{{mobile.image.url}}" alt="" style="height:80px; width:100%;"></td>
-                    <td class="border">{{mobile.mobile_name}}</td>
-                    <td class="border">{{mobile.brand_name}}</td>
-                    <td class="border">{{mobile.price}}</td>
-                    <td class="border">{{mobile.copies}}</td>
-                    <td class="border"><a href="{%url 'mobiledetails' mobile.id%}" class="btn btn-primary">View</a>
-                        <a href="{%url 'mobileupdate' mobile.id%}" class="btn btn-warning">Update</a>
-                        <a href="{%url 'mobileremove' mobile.id%}" class="btn btn-danger">Delete</a>
+                    <td ><img src="{{mobile.image.url}}" alt="" style="height:90px; width:100%;"></td>
+                    <td >{{mobile.mobile_name}}</td>
+                    <td >{{mobile.brand_name}}</td>
+                    <td >{{mobile.price}}</td>
+                    <td >{{mobile.copies}}</td>
+                    <td class="" ><a href="{%url 'mobiledetails' mobile.id%}" class="btn btn-primary btn-sm mx-2">View</a>
+                        <a href="{%url 'mobileupdate' mobile.id%}" class="btn btn-warning btn-sm mx-2">Update</a>
+                        <a href="{%url 'mobileremove' mobile.id%}" class="btn btn-danger btn-sm mx-2">Delete</a>
                     </td>
 
                 </tr>

@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.db.models import Count
 
 from django.contrib.auth import authenticate,login,logout
+
+from customer.decorators import admin_permission_required
 # Create your views here.
 
 
@@ -25,7 +27,7 @@ def registration(request):
             # password1=form.cleaned_data["password1"]
             # password2=form.cleaned_data["password2"]
             form.save()
-            return redirect("signin")
+            return redirect("owner_signin")
         else:
             return render(request, "register.html",{"form":form})
     return render(request,"register.html",context)
@@ -42,12 +44,19 @@ def loginview(request):
             # username=form.cleaned_data["username"]
             # password=form.cleaned_data["password"]
             # print(username,password)
-            return render(request,"owner_options.html")
+            return redirect("dashboard")
     return render(request,"login.html",context)
 
 
+@admin_permission_required
+def signout(request,*args,**kwargs):
 
-def add_mobile(request):
+    logout(request)
+    return redirect("owner_signin")
+
+
+@admin_permission_required
+def add_mobile(request,*args,**kwargs):
     form=forms.AddMobileForm()
     context={}
     context["form"]=form
@@ -66,7 +75,8 @@ def add_mobile(request):
     return render(request,"add_mobile.html",context)
 
 
-def mobile_list(request):
+@admin_permission_required
+def mobile_list(request,*args,**kwargs):
     form=forms.MobileSearchForm()
     mobiles=Mobile.objects.all()
     context={"mobiles":mobiles}
@@ -81,12 +91,14 @@ def mobile_list(request):
     return render(request,"list_mobile.html",context)
 
 
-def mobile_details(request,id):
+@admin_permission_required
+def mobile_details(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     context={"mobile":mobile}
     return render(request, "mobile_details.html", context)
 
-def mobile_update(request,id):
+@admin_permission_required
+def mobile_update(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     form=forms.MobileUpdateForm(instance=mobile)
     context={"form":form}
@@ -98,19 +110,22 @@ def mobile_update(request,id):
 
     return render(request,"mobile_update.html",context)
 
-def mobile_remove(request,id):
+@admin_permission_required
+def mobile_remove(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     mobile.delete()
     return redirect("listmobile")
 
-def dashboard(request):
+@admin_permission_required
+def dashboard(request,*args,**kwargs):
     reports=Order.objects.values("product__mobile_name").annotate(counts=Count("product")).exclude(status="cancelled").order_by("counts")
     mobiles=Mobile.objects.all().order_by("copies")
     orders=Order.objects.filter(status="ordered")
     context={"orders":orders,"reports":reports,"mobiles":mobiles}
     return render(request,"dashboard.html",context)
 
-def order_status_change(request,id):
+@admin_permission_required
+def order_status_change(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
     form=forms.OrderEditForm()
     context={"order":order,"form":form}

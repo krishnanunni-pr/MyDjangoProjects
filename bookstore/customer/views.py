@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Book,Order
 from customer.filters import BookFilter
-from customer.decorators import login_required
+from customer.decorators import admin_permission_required
 # Create your views here.
 
 def signup(request):
@@ -45,14 +45,14 @@ def signin(request):
     return render(request,"customer/login.html",context)
 
 
-@login_required
+@admin_permission_required
 def signout(request,*args,**kwargs):
 
     logout(request)
     return redirect("signin")
 
 
-@login_required
+@admin_permission_required
 def home(request,*args,**kwargs):
 
     books = Book.objects.all()
@@ -60,7 +60,7 @@ def home(request,*args,**kwargs):
     return render(request, "customer/userhome.html", context)
 
 
-@login_required
+@admin_permission_required
 def order_create(request,p_id,*args,**kwargs):
 
     book=Book.objects.get(id=p_id)
@@ -84,7 +84,7 @@ def order_create(request,p_id,*args,**kwargs):
     return render(request,"customer/order_create.html",context)
 
 
-@login_required
+@admin_permission_required
 def order_deatils(request,*args,**kwargs):
 
     orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
@@ -92,7 +92,7 @@ def order_deatils(request,*args,**kwargs):
     return render(request,"customer/order_details.html",context)
 
 
-@login_required
+@admin_permission_required
 def cancel_order(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
     book=Book.objects.get(id=order.product.id)
@@ -104,7 +104,7 @@ def cancel_order(request,id,*args,**kwargs):
     return redirect("home")
 
 
-@login_required
+@admin_permission_required
 def book_search(request,*args,**kwargs):
     filters=BookFilter(request.GET,queryset=Book.objects.all())
     return render(request,"customer/bookfilter.html",{"filter":filters})
