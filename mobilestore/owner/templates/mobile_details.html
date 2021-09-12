@@ -2,7 +2,8 @@
 {%extends 'base_owner.html'%}
 
 {%block body_block%}
-
+{%load static%}
+<link rel="stylesheet" href="{%static 'css/owner_style.css'%}">
 <div class="container mt-5">
     <div class="row">
         <div class="col-4"></div>
@@ -16,8 +17,8 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">{{mobile.brand_name}}</li>
-                    <li class="list-group-item">{{mobile.price}}</li>
-                    <li class="list-group-item">{{mobile.copies}}</li>
+                    <li class="list-group-item">₹{{mobile.price}}</li>
+                    <li class="list-group-item">{{mobile.copies}}copies</li>
                 </ul>
             </div>
         </div>

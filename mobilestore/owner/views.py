@@ -1,16 +1,10 @@
 from django.shortcuts import render,redirect
-
 from owner.models import Mobile,Order
-
 from owner import forms
-
 from django.contrib import messages
-
 from django.db.models import Count
-
 from django.contrib.auth import authenticate,login,logout
-
-from customer.decorators import admin_permission_required
+from customer.decorators import admin_permission_required,owner_signin_permission
 # Create your views here.
 
 
@@ -41,21 +35,30 @@ def loginview(request):
     if request.method=="POST":
         form=forms.LoginForm(request.POST)
         if form.is_valid():
-            # username=form.cleaned_data["username"]
-            # password=form.cleaned_data["password"]
+            username=form.cleaned_data["username"]
+            password=form.cleaned_data["password"]
             # print(username,password)
-            return redirect("dashboard")
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request,user)
+                return redirect("dashboard")
+            else:
+                messages.error(request,"Invalid credentials")
+                return redirect("owner_signin")
+
+        else:
+            return render(request, "login.html", context)
     return render(request,"login.html",context)
 
 
-@admin_permission_required
+@owner_signin_permission
 def signout(request,*args,**kwargs):
 
     logout(request)
     return redirect("owner_signin")
 
 
-@admin_permission_required
+@owner_signin_permission
 def add_mobile(request,*args,**kwargs):
     form=forms.AddMobileForm()
     context={}
@@ -75,7 +78,7 @@ def add_mobile(request,*args,**kwargs):
     return render(request,"add_mobile.html",context)
 
 
-@admin_permission_required
+@owner_signin_permission
 def mobile_list(request,*args,**kwargs):
     form=forms.MobileSearchForm()
     mobiles=Mobile.objects.all()
@@ -91,13 +94,13 @@ def mobile_list(request,*args,**kwargs):
     return render(request,"list_mobile.html",context)
 
 
-@admin_permission_required
+@owner_signin_permission
 def mobile_details(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     context={"mobile":mobile}
     return render(request, "mobile_details.html", context)
 
-@admin_permission_required
+@owner_signin_permission
 def mobile_update(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     form=forms.MobileUpdateForm(instance=mobile)
@@ -110,13 +113,13 @@ def mobile_update(request,id,*args,**kwargs):
 
     return render(request,"mobile_update.html",context)
 
-@admin_permission_required
+@owner_signin_permission
 def mobile_remove(request,id,*args,**kwargs):
     mobile=Mobile.objects.get(id=id)
     mobile.delete()
     return redirect("listmobile")
 
-@admin_permission_required
+@owner_signin_permission
 def dashboard(request,*args,**kwargs):
     reports=Order.objects.values("product__mobile_name").annotate(counts=Count("product")).exclude(status="cancelled").order_by("counts")
     mobiles=Mobile.objects.all().order_by("copies")
@@ -124,7 +127,7 @@ def dashboard(request,*args,**kwargs):
     context={"orders":orders,"reports":reports,"mobiles":mobiles}
     return render(request,"dashboard.html",context)
 
-@admin_permission_required
+@owner_signin_permission
 def order_status_change(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
     form=forms.OrderEditForm()
