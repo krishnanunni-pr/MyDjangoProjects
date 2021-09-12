@@ -6,23 +6,46 @@
 <link rel="stylesheet" href="{%static 'css/owner_style.css'%}">
 <div class="container mt-5">
     <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4 ">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card mb-3" style="max-width: 600px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{mobile.image.url}}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{mobile.mobile_name}}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{mobile.brand_name}}</li>
+                                <li class="list-group-item">₹{{mobile.price}}</li>
+                                <li class="list-group-item">{{mobile.copies}} copies</li>
+                                <a href="{%url 'listmobile'%}" class="btn btn-primary mt-5">Go Back</a>
 
-            <div class="card" style="width: 18rem;">
-                <td class="border"><img src="{{mobile.image.url}}" alt="" style="height:200px; width:100%;"></td>
-                <div class="card-header">
-                    {{mobile.mobile_name}}
+
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{mobile.brand_name}}</li>
-                    <li class="list-group-item">₹{{mobile.price}}</li>
-                    <li class="list-group-item">{{mobile.copies}}copies</li>
-                </ul>
             </div>
         </div>
-        <div class="col-4"></div>
+        <div class="col-2 ">
+
+<!--            <div class="card" style="width: 18rem;">-->
+<!--                <td class="border"><img src="{{mobile.image.url}}" alt="" style="height:200px; width:100%;"></td>-->
+<!--                <div class="card-header">-->
+<!--                    {{mobile.mobile_name}}-->
+<!--                </div>-->
+
+<!--                <ul class="list-group list-group-flush">-->
+<!--                    <li class="list-group-item">{{mobile.brand_name}}</li>-->
+<!--                    <li class="list-group-item">₹{{mobile.price}}</li>-->
+<!--                    <li class="list-group-item">{{mobile.copies}}copies</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+        </div>
+
     </div>
 </div>
 

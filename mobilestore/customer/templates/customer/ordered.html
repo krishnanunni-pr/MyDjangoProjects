@@ -3,21 +3,34 @@
 {%block body_block%}
 
 <div class="row">
+    <!--    <div class="col-4">-->
+    <!--        <div class="card" style="width: 18rem;">-->
+    <!--            <div class="card-body">-->
+    <!--                <img src="{{mobile.image.url}}" class="card-img-top" alt="" style="height:200px">-->
+    <!--                &lt;!&ndash;    <h5 class="card-title">Mobilename:{{mobile.mobile_name}}</h5>&ndash;&gt;-->
+    <!--                &lt;!&ndash;      <h6 class="card-subtitle mb-2 text-muted">Brand:{{mobile.brand_name}}</h6>&ndash;&gt;-->
+    <!--                <h6 class="card-subtitle mb-2 text-muted">Price:{{mobile.price}}</h6>-->
+    <!--                &lt;!&ndash;      <h6 class="card-subtitle mb-2 text-muted">Copies:{{mobile.copies}}</h6>&ndash;&gt;-->
+
+
+    <!--                &lt;!&ndash;    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>&ndash;&gt;-->
+    <!--                &lt;!&ndash;    <a href="#" class="card-link">Card link</a>&ndash;&gt;-->
+    <!--                &lt;!&ndash;    <a href="#" class="card-link">Another link</a>&ndash;&gt;-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <div class="col-4">
-        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-      <img src="{{mobile.image.url}}" class="card-img-top" alt="" style="height:200px">
-<!--    <h5 class="card-title">Mobilename:{{mobile.mobile_name}}</h5>-->
-<!--      <h6 class="card-subtitle mb-2 text-muted">Brand:{{mobile.brand_name}}</h6>-->
-    <h6 class="card-subtitle mb-2 text-muted">Price:{{mobile.price}}</h6>
-<!--      <h6 class="card-subtitle mb-2 text-muted">Copies:{{mobile.copies}}</h6>-->
+        <div class="card mb-3 mt-4">
+            <img src="{{mobile.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Brand:{{mobile.brand_name}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">₹ {{mobile.price}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Copies:{{mobile.copies}}</h6>
 
 
-<!--    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-<!--    <a href="#" class="card-link">Card link</a>-->
-<!--    <a href="#" class="card-link">Another link</a>-->
-  </div>
-</div>
+            </div>
+        </div>
+
     </div>
     <div class="col-4">
         <form action="" method="post">

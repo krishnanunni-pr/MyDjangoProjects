@@ -1,6 +1,9 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django import forms
 from owner.models import Book,Order
 from django.forms import ModelForm
+
 
 class AddBookForm(ModelForm):
     class Meta:
@@ -38,15 +41,26 @@ class AddBookForm(ModelForm):
             self.add_error("copies",msg)
 
 
-class RegistrationForm(forms.Form):
-    first_name=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    username=forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))
-    email=forms.CharField(widget=forms.EmailInput(attrs={"class":"form-style"}))
-    password1=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-style"}))
-    password2=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-style"}))
+class RegistrationForm(UserCreationForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
+    class Meta:
+        model=User
+        fields=["first_name", 'last_name', "username", "email", "password1", "password2"]
+        widgets = {
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
 
+        }
 
+    # first_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-style"}))
+    # username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-style"}))
+    # email = forms.CharField(widget=forms.EmailInput(attrs={"class": "form-style"}))
+    # password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-style"}))
+    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-style"}))
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-style"}))

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from owner.models import Book,Order
 from customer.filters import BookFilter
-from customer.decorators import admin_permission_required
+from customer.decorators import login_required
 # Create your views here.
 
 def signup(request):
@@ -41,18 +41,18 @@ def signin(request):
                 return redirect("signin")
         else:
 
-            return render(request,"customer/login.html",{"form":form})
-    return render(request,"customer/login.html",context)
+            return render(request,"customer/cust_login.html",{"form":form})
+    return render(request,"customer/cust_login.html",context)
 
 
-@admin_permission_required
+@login_required
 def signout(request,*args,**kwargs):
 
     logout(request)
     return redirect("signin")
 
 
-@admin_permission_required
+@login_required
 def home(request,*args,**kwargs):
 
     books = Book.objects.all()
@@ -60,10 +60,10 @@ def home(request,*args,**kwargs):
     return render(request, "customer/userhome.html", context)
 
 
-@admin_permission_required
-def order_create(request,p_id,*args,**kwargs):
+@login_required
+def order_create(request,id,*args,**kwargs):
 
-    book=Book.objects.get(id=p_id)
+    book=Book.objects.get(id=id)
     form=forms.OrderForm(initial={"product":book})
     context={"form":form,"book":book}
     if request.method=="POST":
@@ -84,7 +84,7 @@ def order_create(request,p_id,*args,**kwargs):
     return render(request,"customer/order_create.html",context)
 
 
-@admin_permission_required
+@login_required
 def order_deatils(request,*args,**kwargs):
 
     orders=Order.objects.filter(user=request.user).exclude(status="cancelled")
@@ -92,7 +92,7 @@ def order_deatils(request,*args,**kwargs):
     return render(request,"customer/order_details.html",context)
 
 
-@admin_permission_required
+@login_required
 def cancel_order(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
     book=Book.objects.get(id=order.product.id)
@@ -104,7 +104,7 @@ def cancel_order(request,id,*args,**kwargs):
     return redirect("home")
 
 
-@admin_permission_required
+@login_required
 def book_search(request,*args,**kwargs):
     filters=BookFilter(request.GET,queryset=Book.objects.all())
     return render(request,"customer/bookfilter.html",{"filter":filters})

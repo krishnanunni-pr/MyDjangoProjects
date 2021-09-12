@@ -4,22 +4,46 @@
 {%block body_block%}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card mb-3" style="max-width: 600px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{book.image.url}}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{book.book_name}}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{book.author}}</li>
+                                <li class="list-group-item">₹{{book.price}}</li>
+                                <li class="list-group-item">{{book.copies}} copies</li>
+                                <a href="{%url 'listbook'%}" class="btn btn-primary mt-5">Go Back</a>
 
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                    {{book.book_name}}
+
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
-                <img src="{{book.image.url}}" class="card-img-top" alt="" style="height:200px">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{book.author}}</li>
-                    <li class="list-group-item">₹{{book.price}}</li>
-                    <li class="list-group-item">{{book.copies}} copies</li>
-                </ul>
             </div>
         </div>
-        <div class="col-4"></div>
+        <div class="col-2">
+
+
+            <!--            <div class="card" style="width: 18rem;">-->
+            <!--                <div class="card-header">-->
+            <!--                    {{book.book_name}}-->
+            <!--                </div>-->
+            <!--                <img src="{{book.image.url}}" class="card-img-top" alt="" style="height:200px">-->
+            <!--                <ul class="list-group list-group-flush">-->
+            <!--                    <li class="list-group-item">{{book.author}}</li>-->
+            <!--                    <li class="list-group-item">₹{{book.price}}</li>-->
+            <!--                    <li class="list-group-item">{{book.copies}} copies</li>-->
+            <!--                </ul>-->
+            <!--            </div>-->
+        </div>
+
     </div>
 </div>
 

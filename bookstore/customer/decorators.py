@@ -18,3 +18,13 @@ def admin_permission_required(func):
             return func(request,id,*args,**kwargs)
 
     return wrapper
+
+
+def owner_signin_permission(func):
+    def wrapper(request,id=None,*args,**kwargs):
+        if not request.user.is_authenticated:
+            return redirect("owner_signin")
+        else:
+            return func(request,id,*args,**kwargs)
+
+    return wrapper

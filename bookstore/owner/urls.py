@@ -7,7 +7,7 @@ from owner import views
 urlpatterns=[
     path("",views.dashboard,name="dashboard"),
     path("books/add",views.book_create,name='addbook'),
-    path("accounts/signup",views.signupview,name="signup"),
+    path("accounts/signup",views.signupview,name="owner_signup"),
     path("accounts/login",views.loginview,name="owner_signin"),
     path("accounts/signout",views.signoutview,name="owner_signout"),
     path("books/list",views.book_list,name="listbook"),

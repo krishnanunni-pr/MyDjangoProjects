@@ -61,9 +61,9 @@ def home(request,*args,**kwargs):
 
 
 @login_required
-def order_create(request,m_id,*args,**kwargs):
+def order_create(request,id,*args,**kwargs):
 
-    mobile=Mobile.objects.get(id=m_id)
+    mobile=Mobile.objects.get(id=id)
     form=forms.OrderForm(initial={"product":mobile})
     context={"form":form,"mobile":mobile}
     if request.method=="POST":

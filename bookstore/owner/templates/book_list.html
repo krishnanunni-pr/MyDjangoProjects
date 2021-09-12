@@ -21,6 +21,16 @@
     </div>
 
 </div>
+
+<div class="container">
+    <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <h2 class="text-center mt-4  " style="color: Green;">List of books</h2>
+    </div>
+    <div class="col-1"></div>
+</div>
+
 <div class="row">
     <div class="col-3"></div>
     <div class="col-3"></div>
@@ -29,42 +39,43 @@
         <form action="" method="post">
             {%csrf_token%}
             {{form.as_p}}
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
         </form>
     </div>
     <div class="col-2"></div>
 </div>
 
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <table class="table">
-                <tr>
-                    <td class="border">IMAGE</td>
-                    <td class="border">BOOK NAME</td>
-                    <td class="border">AUTHOR</td>
-                    <td class="border">PRICE</td>
-                    <td class="border">COPIES</td>
-                    <td class="border">ACTION</td>
-                </tr>
-                {%for book in books%}
-                <tr>
-                    <td class="border"><img src="{{book.image.url}}" alt="" style="height:100px; width:100px;"></td>
-                    <td class="border">{{book.book_name}}</td>
-                    <td class="border">{{book.author}}</td>
-                    <td class="border">{{book.price}}</td>
-                    <td class="border">{{book.copies}}</td>
-                    <td class="border"><a href="{%url 'bookdetails' book.id%}" class="btn btn-primary">View</a>
-                        <a href="{%url 'changebook' book.id%}" class="btn btn-warning">Update</a>
-                        <a href="{%url 'removebook' book.id%}" class="btn btn-danger">Delete</a>
-                    </td>
+</div>
+<div class="row mt-3">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table class="table">
+            <tr>
+                <td class="table-info">IMAGE</td>
+                <td class="table-info">BOOK NAME</td>
+                <td class="table-info">AUTHOR</td>
+                <td class="table-info">PRICE</td>
+                <td class="table-info">COPIES</td>
+                <td class="table-info">ACTION</td>
+            </tr>
+            {%for book in books%}
+            <tr>
+                <td><img src="{{book.image.url}}" alt="" style="height:100px; width:100px;"></td>
+                <td>{{book.book_name}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.price}}</td>
+                <td>{{book.copies}}</td>
+                <td><a href="{%url 'bookdetails' book.id%}" class="btn btn-primary">View</a>
+                    <a href="{%url 'changebook' book.id%}" class="btn btn-warning">Update</a>
+                    <a href="{%url 'removebook' book.id%}" class="btn btn-danger">Delete</a>
+                </td>
 
-                </tr>
-                {%endfor%}
-            </table>
-        </div>
-        <div class="col-1"></div>
+            </tr>
+            {%endfor%}
+        </table>
     </div>
+    <div class="col-1"></div>
+</div>
 </div>
 
 

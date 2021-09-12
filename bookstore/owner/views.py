@@ -4,7 +4,7 @@ from owner import forms
 from django.contrib import messages
 from django.db.models import Count
 from django.contrib.auth import authenticate,login,logout
-from customer.decorators import admin_permission_required
+from customer.decorators import admin_permission_required,owner_signin_permission
 
 # Create your views here.
 
@@ -22,7 +22,9 @@ def signupview(request):
             # password2=form.cleaned_data["password2"]
             # print(first_name,username,email,password1,password2)
             form.save()
-            return render(request,"register.html")
+            return redirect("owner_signin")
+        else:
+            return render(request,"register.html",{"form":form})
     return render(request,"register.html",context)
 
 
@@ -37,16 +39,27 @@ def loginview(request):
             username=form.cleaned_data["username"]
             password=form.cleaned_data["password"]
             print(username,password)
-            return redirect("dashboard")
-    return render(request,"login.html",context)
+            user = authenticate(request,username=username,password=password)
+            if user:
+                login(request,user)
+                return redirect("dashboard")
+            else:
+                messages.error(request, "Invalid credentials")
+                return redirect("owner_signin")
+
+        else:
+            return render(request, "owner_login.html", context)
+    return render(request,"owner_login.html",context)
 
 
+@owner_signin_permission
 def signoutview(request,*args,**kwargs):
 
     logout(request)
     return redirect("owner_signin")
 
 
+@owner_signin_permission
 def book_create(request,*args,**kwargs):
     form=forms.AddBookForm()
     context={}
@@ -71,6 +84,7 @@ def book_create(request,*args,**kwargs):
     return render(request,"book_add.html",context)
 
 
+@owner_signin_permission
 def book_list(request,*args,**kwargs):
     form=forms.BookSearchForm()
     books=Book.objects.all()
@@ -87,6 +101,7 @@ def book_list(request,*args,**kwargs):
     return render(request,"book_list.html",context)
 
 
+@owner_signin_permission
 def book_edit(request,id,*args,**kwargs):
     book=Book.objects.get(id=id)
     # data={
@@ -110,15 +125,13 @@ def book_edit(request,id,*args,**kwargs):
             # book.copies=copies_up
             # book.save()
             form.save()
+            messages.success(request, "Book updated successfully")
             return redirect('listbook')
 
     return render(request,"book_edit.html",context)
 
 
-def book_remove(request,id,*args,**kwargs):
-    return render(request,"book_remove.html")
-
-
+@owner_signin_permission
 def book_detail(request,id):
     book=Book.objects.get(id=id)
     context={}
@@ -126,12 +139,14 @@ def book_detail(request,id):
     return render(request,"book_detail.html",context)
 
 
+@owner_signin_permission
 def book_remove(request,id,*args,**kwargs):
     book=Book.objects.get(id=id)
     book.delete()
     return redirect('listbook')
 
 
+@owner_signin_permission
 def dashboard(request,*args,**kwargs):
     reports=Order.objects.values("product__book_name").annotate(counts=Count("product")).exclude(status="cancelled").order_by("counts")
     books=Book.objects.all().order_by("copies")
@@ -140,6 +155,7 @@ def dashboard(request,*args,**kwargs):
     return render(request,"dashboard.html",context)
 
 
+@owner_signin_permission
 def order_status_change(request,id,*args,**kwargs):
     order=Order.objects.get(id=id)
 
@@ -154,6 +170,7 @@ def order_status_change(request,id,*args,**kwargs):
                 book.copies += 1
                 # print("edited", book.copies)
                 book.save()
+                messages.success(request, "Order status changed")
             form.save()
             return redirect("dashboard")
 

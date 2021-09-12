@@ -47,8 +47,8 @@ def loginview(request):
                 return redirect("owner_signin")
 
         else:
-            return render(request, "login.html", context)
-    return render(request,"login.html",context)
+            return render(request, "owner_login.html", context)
+    return render(request,"owner_login.html",context)
 
 
 @owner_signin_permission
@@ -72,6 +72,7 @@ def add_mobile(request,*args,**kwargs):
             # numbers=form.cleaned_data["numbers"]
             # print
             form.save()
+            messages.success(request, "mobile added successfully")
             return redirect("listmobile")
         else:
             return render(request,"add_mobile.html",{"form":form})
@@ -109,6 +110,7 @@ def mobile_update(request,id,*args,**kwargs):
         form=forms.MobileUpdateForm(request.POST,instance=mobile,files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Mobile updated successfully")
             return redirect("listmobile")
 
     return render(request,"mobile_update.html",context)

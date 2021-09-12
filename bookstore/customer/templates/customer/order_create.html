@@ -3,21 +3,34 @@
 {%block body_block%}
 
 <div class="row">
+    <!--    <div class="col-4">-->
+    <!--        <div class="card" style="width: 18rem;">-->
+    <!--            <div class="card-body">-->
+    <!--                <img src="{{book.image.url}}" class="card-img-top" alt="" style="height:200px">-->
+    <!--                <h5 class="card-title">Bookname:{{book.book_name}}</h5>-->
+    <!--                <h6 class="card-subtitle mb-2 text-muted">Author:{{book.author}}</h6>-->
+    <!--                <h6 class="card-subtitle mb-2 text-muted">Price:{{book.price}}</h6>-->
+    <!--                <h6 class="card-subtitle mb-2 text-muted">Copies:{{book.copies}}</h6>-->
+
+
+    <!--                &lt;!&ndash;    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>&ndash;&gt;-->
+    <!--                &lt;!&ndash;    <a href="#" class="card-link">Card link</a>&ndash;&gt;-->
+    <!--                &lt;!&ndash;    <a href="#" class="card-link">Another link</a>&ndash;&gt;-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <div class="col-4">
-        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-      <img src="{{book.image.url}}" class="card-img-top" alt="" style="height:200px">
-    <h5 class="card-title">Bookname:{{book.book_name}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Author:{{book.author}}</h6>
-    <h6 class="card-subtitle mb-2 text-muted">Price:{{book.price}}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Copies:{{book.copies}}</h6>
+        <div class="card mb-3 mt-5">
+            <img src="{{book.image.url}}" class="card-img-top" alt="..." style="height:300px;">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Author:{{book.author}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">₹ {{book.price}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Copies:{{book.copies}}</h6>
 
 
-<!--    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-<!--    <a href="#" class="card-link">Card link</a>-->
-<!--    <a href="#" class="card-link">Another link</a>-->
-  </div>
-</div>
+            </div>
+        </div>
+
     </div>
     <div class="col-4">
         <form action="" method="post">

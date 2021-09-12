@@ -3,6 +3,24 @@
 
 
 {%block body_block%}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+            {%for message in messages%}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="text-success">
+                {{message}}
+            </div>
+            {%endif%}
+            {%endfor%}
+            {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+</div>
 
 <div class="container">
     <div class="row">
