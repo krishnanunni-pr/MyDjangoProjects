@@ -14,7 +14,7 @@ class UserAddForm(UserCreationForm):
         fields = ['email', 'role', 'password1', 'password2']
         widgets = {
             "email": forms.EmailInput(attrs={"class": "form-control"}),
-            "role": forms.TextInput(attrs={"class": "form-control"}),
+            "role": forms.Select(attrs={"class": "form-select"}),
 
         }
 
@@ -22,7 +22,7 @@ class UserAddForm(UserCreationForm):
 class CourseAddForm(ModelForm):
     class Meta:
         model = Course
-        fields = "__all__"
+        fields = ["course_name"]
         widgets = {
             "course_name": forms.TextInput(attrs={"class": "form-control"}),
             # "is_active": forms.(attrs={"class": "form-control"})
@@ -32,7 +32,7 @@ class CourseAddForm(ModelForm):
 class BatchAddForm(ModelForm):
     class Meta:
         model= Batch
-        fields='__all__'
+        fields=['course','batch_name']
         widgets = {
             "course": forms.Select(attrs={"class": "form-select"}),
             "batch_name": forms.TextInput(attrs={"class": "form-control"}),
