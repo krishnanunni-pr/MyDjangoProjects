@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from reporting.admin import UserCreationForm
-from reporting.models import MyUser, Course, Batch
+from reporting.models import MyUser, Course, Batch,TimeSheet
 from django.forms import ModelForm
 from django import forms
 
@@ -37,5 +37,23 @@ class BatchAddForm(ModelForm):
             "course": forms.Select(attrs={"class": "form-select"}),
             "batch_name": forms.TextInput(attrs={"class": "form-control"}),
             # "is_active": forms.NumberInput(attrs={"class": "form-control"})
+
+        }
+
+
+class SignInForm(forms.Form):
+    email=forms.CharField(widget=forms.EmailInput())
+    password=forms.CharField(widget=forms.PasswordInput())
+
+
+class TimeSheetForm(forms.ModelForm):
+
+    class Meta:
+        model=TimeSheet
+        fields=['batch','topic','topic_status']
+        widgets = {
+            "batch": forms.Select(attrs={"class": "form-select"}),
+            "topic": forms.TextInput(attrs={"class": "form-control"}),
+            "topic_status": forms.Select(attrs={"class": "form-select"})
 
         }
