@@ -2,8 +2,18 @@
 {%extends 'reporting/base.html' %}
 
 {%block body_block%}
-<div class="container mt-5">
 
+<div class="comtainer">
+    <div class="row">
+
+        <div class="col-2">
+            <h1 class="display-5 mt-2 ">{{request.user}}</h1>
+        </div>
+        <div class="col-10"></div>
+
+    </div>
+
+<div class="container mt-5">
     <div class="container px-lg-5">
         <!-- Page Features-->
         <div class="row gx-lg-5">
@@ -35,5 +45,6 @@
 </div>
 
 
+</div>
 {% endblock %}
 

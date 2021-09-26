@@ -1,12 +1,18 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView,CreateView,ListView,UpdateView,DetailView
+from django_filters.views import FilterView
 from reporting import forms
 from reporting.models import MyUser,Course,Batch,TimeSheet
 from django.contrib.auth import authenticate,login,logout
 from reporting.filters import TimeSheetFilter
+from .decorators import signin_required,admin_permission_required
+from django.utils.decorators import method_decorator
+from django.contrib import messages
 # Create your views here.
 
+
+@method_decorator(admin_permission_required,name="dispatch")
 class AdminHome(TemplateView):
     template_name = 'reporting/admin_home.html'
     # def get(self,request):
@@ -15,6 +21,7 @@ class AdminHome(TemplateView):
 
 
 #User
+@method_decorator(admin_permission_required,name="dispatch")
 class UserAdd(CreateView):
     model=MyUser
     form_class=forms.UserAddForm
@@ -37,12 +44,14 @@ class UserAdd(CreateView):
     #         return redirect("adminhome")
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class UserList(ListView):
     model = MyUser
     template_name = 'reporting/user_list.html'
     context_object_name ='users'
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class UserEdit(UpdateView):
     model = MyUser
     template_name = 'reporting/user_edit.html'
@@ -51,6 +60,7 @@ class UserEdit(UpdateView):
     success_url = reverse_lazy('user_list')
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class UserDetailView(DetailView):
     model = MyUser
     template_name = "reporting/userdetailview.html"
@@ -58,6 +68,7 @@ class UserDetailView(DetailView):
 
 
 #Course
+@method_decorator(admin_permission_required,name="dispatch")
 class CourseAdd(CreateView):
     model = Course
     form_class = forms.CourseAddForm
@@ -82,12 +93,13 @@ class CourseAdd(CreateView):
     #         return redirect("adminhome")
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class Courses(ListView):
     model = Course
     template_name = 'reporting/course_list.html'
     context_object_name = 'courses'
 
-
+@method_decorator(admin_permission_required,name="dispatch")
 class CourseEdit(UpdateView):
     model = Course
     template_name = 'reporting/course_edit.html'
@@ -96,6 +108,7 @@ class CourseEdit(UpdateView):
     success_url = reverse_lazy('course_list')
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class CourseDetailView(DetailView):
     model=Course
     template_name = "reporting/coursedetailview.html"
@@ -105,6 +118,7 @@ class CourseDetailView(DetailView):
 
 
 #Batch
+@method_decorator(admin_permission_required,name="dispatch")
 class BatchAdd(CreateView):
     model = Batch
     form_class = forms.BatchAddForm
@@ -129,11 +143,13 @@ class BatchAdd(CreateView):
     #         return redirect("adminhome")
 
 
+@method_decorator(admin_permission_required,name="dispatch")
 class Batches(ListView):
     model = Batch
     template_name = 'reporting/batch_list.html'
     context_object_name = 'batches'
 
+@method_decorator(admin_permission_required,name="dispatch")
 class BatchEdit(UpdateView):
     model = Batch
     template_name = 'reporting/batch_edit.html'
@@ -141,6 +157,7 @@ class BatchEdit(UpdateView):
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('batch_list')
 
+@method_decorator(admin_permission_required,name="dispatch")
 class BatchDetailView(DetailView):
     model = Batch
     template_name = "reporting/batchdetailview.html"
@@ -169,10 +186,17 @@ class SignInView(TemplateView):
                 if request.user.is_admin:
 
                     print('success')
+                    messages.success(request, "Login successfull")
                     return redirect('adminhome')
                 else:
+                    messages.success(request, "Login successfull")
                     return redirect('userhome')
+            else:
+                messages.error(request,"Invalid credentials")
+                return redirect("signin")
 
+
+@method_decorator(signin_required,name="dispatch")
 class UserHome(TemplateView):
     template_name = 'reporting/user_home.html'
 
@@ -183,7 +207,7 @@ class SignOut(TemplateView):
         return redirect('signin')
 
 
-
+@method_decorator(signin_required,name="dispatch")
 class AddTimeSheetView(CreateView):
     model = TimeSheet
     template_name = 'reporting/add_timesheet.html'
@@ -197,17 +221,36 @@ class AddTimeSheetView(CreateView):
             timesheet.save()
             return redirect("userhome")
 
-class Timesheets(ListView):
+
+@method_decorator(signin_required,name="dispatch")
+class Timesheets(FilterView):
     model = TimeSheet
     template_name = 'reporting/timesheets_list.html'
     context_object_name = 'timesheets'
+    filterset_class=TimeSheetFilter
+    context={}
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filters"] = self.filterset_class
         if self.request.user.is_admin:
-            queryset=self.model.objects.all()
+            queryset = self.model.objects.all()
         else:
-            queryset=self.model.objects.filter(user=self.request.user,verified=False)
-        return queryset
+            queryset = self.model.objects.filter(user=self.request.user, verified=False)
+        context["queryset"]=queryset
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #     context=super().get_context_data(**kwargs)
+    #     context['filters'] = self.filterset_class
+    #     return context
+    #
+    # def get_queryset(self):
+    #     if self.request.user.is_admin:
+    #         queryset=self.model.objects.all()
+    #     else:
+    #         queryset=self.model.objects.filter(user=self.request.user,verified=False)
+    #     return queryset
 
     # def get(self, request, *args, **kwargs):
     #     timesheets=self.model.objects.filter(user=request.user)
@@ -215,13 +258,14 @@ class Timesheets(ListView):
     #     context['timesheets']=timesheets
     #     return render(request,self.template_name,context)
 
-
+@method_decorator(signin_required,name="dispatch")
 class TimeSheetEdit(UpdateView):
     model = TimeSheet
     template_name = 'reporting/Timesheet_edit.html'
     form_class = forms.TimeSheetForm
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('listtimesheet')
+
 
 
 class BatchVerify(UpdateView):
@@ -235,4 +279,45 @@ class BatchVerify(UpdateView):
         return redirect("listtimesheet")
 
 
-class TimeFilter(TemplateView):
+# class ListTimeSheet(FilterView):
+#     model = TimeSheet
+#     template_name = 'reporting/timesheets_list.html'
+#     context_object_name = 'timesheets'
+#     filterset_class = TimeSheetFilter
+#     context={}
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["filters"] = self.filterset_class
+#         # if self.request.user.is_admin:
+#         #     queryset = self.model.objects.all()
+#         # else:
+#         #     queryset = self.model.objects.filter(user = self.request.user,verified = False)
+#         #
+#         # context["queryset"] = queryset
+#         return context
+#
+#     def get_queryset(self):
+#         if self.request.user.is_admin:
+#             queryset=self.model.objects.all()
+#         else:
+#             queryset=self.model.objects.filter(user=self.request.user,verified=False)
+#         return queryset
+
+
+# class FilterTimeSheet(FilterView):
+#     model = TimeSheet
+#     template_name = "reporting/timesheets_list.html"
+#     context_object_name = "timesheets"
+#     filterset_class=TimeSheetFilter
+#     context={}
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["filters"] = self.filterset_class
+#         if self.request.user.is_admin:
+#             queryset = self.model.objects.all()
+#         else:
+#             queryset = self.model.objects.filter(user=self.request.user, verified=False)
+#         context["queryset"]=queryset
+#         return context

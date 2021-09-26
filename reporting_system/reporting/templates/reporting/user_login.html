@@ -9,16 +9,52 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <form action="" method="post">
-                {%csrf_token%}
-                {{form.as_p}}
-                <input type="submit" value="Login" class="btn btn-success">
-            </form>
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+            {%for message in messages%}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="text-danger">
+                {{message}}
+            </div>
+            {%endif%}
+            <!--                {{message}}-->
+            {%endfor%}
+            {%endif%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-5"></div>
+        <div class="col-4">
+            <div class="col-4"><h2 class="text-center mt-4 mb-1 " style="color: Green;">Sign in </h2></div>
         </div>
         <div class="col-3"></div>
     </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="" method="post">
+                {%csrf_token%}
+                {{form.as_p}}
+<!--                <input type="submit" value="Login" class="btn btn-success">-->
+                 <div class="row ">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="row">
+                            <button type="submit" class="btn btn-success ">Signin</button>
+                        </div>
+
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
 </div>
 
 </body>

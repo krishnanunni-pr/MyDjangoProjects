@@ -5,14 +5,14 @@ from django import forms
 
 
 class TimeSheetFilter(django_filters.FilterSet):
-    user=django_filters.ModelChoiceFilter(queryset=MyUser.objects.all(),
+    user = django_filters.ModelChoiceFilter(queryset=MyUser.objects.all(),
                                           widget=forms.Select(attrs={'class':'form-select'}))
     batch = django_filters.ModelChoiceFilter(queryset=Batch.objects.all(),
                                             widget=forms.Select(attrs={'class': 'form-select'}))
 
-    date=django_filters.DateFilter(widget=forms.DateInput(attrs={'class':'date'}))
+    date=django_filters.DateFilter(widget=forms.DateInput(attrs={'type':'date',"class":"form-control"}))
 
 
     class Meta:
-        model=TimeSheet
-        fields=['date','batch','user']
+        model = TimeSheet
+        fields = ['date','batch','user']

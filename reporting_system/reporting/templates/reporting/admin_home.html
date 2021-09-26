@@ -3,51 +3,85 @@
 
 {%block body_block%}
 
-<div class="container px-lg-5">
-    <div class="p-4 p-lg-5 bg-light rounded-3 text-center mt-3">
-        <h1 class="display-5 fw-bold">Admin home</h1>
-        <div class="m-4 m-lg-5">
-            <a class="btn btn-primary btn-lg" href="{%url 'adduser'%}">User Management</a>
-            <a class="btn btn-primary btn-lg" href="{%url 'addcourse'%}">Cousre Management</a>
-            <a class="btn btn-primary btn-lg" href="{%url 'addbatch'%}">Batch Management</a>
-            <a class="btn btn-primary btn-lg" href="{%url 'listtimesheet'%}">Timesheet Management</a>
-        </div>
-    </div>
-</div>
-
 <div class="container">
-
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-            <a href=""></a>
+<div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%if messages%}
+            {%for message in messages%}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="text-success">
+                {{message}}
+            </div>
+            {%endif%}
+            <!--                {{message}}-->
+            {%endfor%}
+            {%endif%}
         </div>
-        <div class="col-3">
-            <a href=""></a>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-            <a href=""></a>
-        </div>
-        <div class="col-3">
-            <a href=""></a>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-
-        </div>
-        <div class="col-3">
-            <a href=""></a>
-        </div>
-        <div class="col-3"></div>
+        <div class="col-4"></div>
     </div>
 </div>
 
+<div class=" p-lg-5 bg-light rounded-3 text-center ">
+    <h1 class="display-5 ">Admin home</h1>
+
+</div>
+
+<div class="container mt-5">
+
+    <div class="container px-lg-5">
+        <!-- Page Features-->
+        <div class="row gx-lg-5">
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
+                                class="bi bi-collection"></i></div>
+                        <a href="{%url 'adduser'%}" ><h2 class="fs-4 fw-bold">User
+                        Management</h2></a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
+                                class="bi bi-collection"></i></div>
+                        <a href="{%url 'addcourse'%}" ><h2 class="fs-4 fw-bold">Course Management</h2></a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
+                                class="bi bi-collection"></i></div>
+                        <a href="{%url 'addbatch'%}" ><h2 class="fs-4 fw-bold">Batch Management</h2></a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
+                                class="bi bi-collection"></i></div>
+                        <a href="{%url 'listtimesheet'%}" ><h2 class="fs-4 fw-bold">Timesheet Management</h2></a>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
