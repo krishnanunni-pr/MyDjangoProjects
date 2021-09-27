@@ -11,8 +11,8 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 # Create your views here.
 
-
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class AdminHome(TemplateView):
     template_name = 'reporting/admin_home.html'
     # def get(self,request):
@@ -21,7 +21,9 @@ class AdminHome(TemplateView):
 
 
 #User
-@method_decorator(admin_permission_required,name="dispatch")
+
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class UserAdd(CreateView):
     model=MyUser
     form_class=forms.UserAddForm
@@ -44,14 +46,16 @@ class UserAdd(CreateView):
     #         return redirect("adminhome")
 
 
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class UserList(ListView):
     model = MyUser
     template_name = 'reporting/user_list.html'
     context_object_name ='users'
 
 
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class UserEdit(UpdateView):
     model = MyUser
     template_name = 'reporting/user_edit.html'
@@ -59,8 +63,8 @@ class UserEdit(UpdateView):
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('user_list')
 
-
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class UserDetailView(DetailView):
     model = MyUser
     template_name = "reporting/userdetailview.html"
@@ -68,7 +72,8 @@ class UserDetailView(DetailView):
 
 
 #Course
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class CourseAdd(CreateView):
     model = Course
     form_class = forms.CourseAddForm
@@ -93,13 +98,16 @@ class CourseAdd(CreateView):
     #         return redirect("adminhome")
 
 
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class Courses(ListView):
     model = Course
     template_name = 'reporting/course_list.html'
     context_object_name = 'courses'
 
-@method_decorator(admin_permission_required,name="dispatch")
+
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class CourseEdit(UpdateView):
     model = Course
     template_name = 'reporting/course_edit.html'
@@ -108,7 +116,8 @@ class CourseEdit(UpdateView):
     success_url = reverse_lazy('course_list')
 
 
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class CourseDetailView(DetailView):
     model=Course
     template_name = "reporting/coursedetailview.html"
@@ -118,7 +127,8 @@ class CourseDetailView(DetailView):
 
 
 #Batch
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class BatchAdd(CreateView):
     model = Batch
     form_class = forms.BatchAddForm
@@ -143,13 +153,16 @@ class BatchAdd(CreateView):
     #         return redirect("adminhome")
 
 
-@method_decorator(admin_permission_required,name="dispatch")
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class Batches(ListView):
     model = Batch
     template_name = 'reporting/batch_list.html'
     context_object_name = 'batches'
 
-@method_decorator(admin_permission_required,name="dispatch")
+
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class BatchEdit(UpdateView):
     model = Batch
     template_name = 'reporting/batch_edit.html'
@@ -157,7 +170,9 @@ class BatchEdit(UpdateView):
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('batch_list')
 
-@method_decorator(admin_permission_required,name="dispatch")
+
+@method_decorator(signin_required,name='dispatch')
+# @method_decorator(admin_permission_required,name="dispatch")
 class BatchDetailView(DetailView):
     model = Batch
     template_name = "reporting/batchdetailview.html"
@@ -184,7 +199,6 @@ class SignInView(TemplateView):
             if user:
                 login(request,user)
                 if request.user.is_admin:
-
                     print('success')
                     messages.success(request, "Login successfull")
                     return redirect('adminhome')
@@ -220,6 +234,8 @@ class AddTimeSheetView(CreateView):
             timesheet.user=request.user
             timesheet.save()
             return redirect("userhome")
+        else:
+            return render(request,self.template_name,{"form":form})
 
 
 @method_decorator(signin_required,name="dispatch")
@@ -267,7 +283,7 @@ class TimeSheetEdit(UpdateView):
     success_url = reverse_lazy('listtimesheet')
 
 
-
+@method_decorator(signin_required,name='dispatch')
 class BatchVerify(UpdateView):
     model=TimeSheet
     pk_url_kwarg = 'id'

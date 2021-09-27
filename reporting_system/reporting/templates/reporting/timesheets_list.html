@@ -3,6 +3,26 @@
 
 {%block body_block%}
 
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+
+            {%for field in form%}
+                <div class="text-danger">
+                    {{field.errors}}
+                </div>
+
+                {{field.label_tag}}
+                {{field}}
+                {%endfor%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+
 <div class="container">
 
     <h1 class="display-5  text-center bg-light rounded-3 mt-2 ">Timesheets</h1>

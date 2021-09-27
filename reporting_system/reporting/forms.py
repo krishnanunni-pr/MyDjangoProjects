@@ -3,7 +3,7 @@ from reporting.admin import UserCreationForm
 from reporting.models import MyUser, Course, Batch,TimeSheet
 from django.forms import ModelForm
 from django import forms
-
+from datetime import timedelta,date
 
 class UserAddForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
@@ -54,6 +54,16 @@ class TimeSheetForm(forms.ModelForm):
         widgets = {
             "batch": forms.Select(attrs={"class": "form-select"}),
             "topic": forms.TextInput(attrs={"class": "form-control"}),
-            "topic_status": forms.Select(attrs={"class": "form-select"})
+            "topic_status": forms.Select(attrs={"class": "form-select"}),
+
 
         }
+
+    def clean(self):
+        cleaned_data=super().clean()
+        edd=date.today()
+        batch=cleaned_data["batch"]
+        dates=TimeSheet.objects.filter(date=edd,batch=batch)
+        if dates:
+            msg="topic/batch is already added!"
+            self.add_error("topic",msg)
